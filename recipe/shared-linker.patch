@@ -1,0 +1,33 @@
+From a2b890a1430bd8eedac16d8bb8001325f28e710b Mon Sep 17 00:00:00 2001
+From: "Richard J. Knight" <rjknight@us.ibm.com>
+Date: Mon, 6 Jan 2020 21:23:02 +0000
+Subject: [PATCH] powerai: Fix linker issue in pytorch build scripts
+
+- Conda sets a default value for LDFLAGS when installing the
+  compilers, that value of LDFLAGS is later picked up by cmake
+  and assigned to the variable CMAKE_SHARED_LINKER_FLAGS.
+  The default value of CMAKE_SHARED_LINKER_FLAGS is being over written
+  in CMakeLists.txt if the build system is linux.
+
+  This commit removes the default flag --as-needed from the LDFLAGS
+  and modifies the code in CMakeLists.txt to append the value of
+  --no-as-needed if the system is linux
+
+  [ Ref: a38c8f3, 2fc67da ]
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 50f7657440..d655fa24d7 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -273,7 +273,7 @@ set(OP_DEPENDENCY "" CACHE STRING
+ # symbol lookup error: miniconda3/envs/pytorch-py3.7/lib/libmkl_intel_lp64.so: undefined symbol: mkl_blas_dsyrk
+ # https://software.intel.com/en-us/articles/symbol-lookup-error-when-linking-intel-mkl-with-gcc-on-ubuntu
+ if(LINUX)
+-  set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-as-needed")
++  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-as-needed")
+ endif()
+
+ if(MSVC)

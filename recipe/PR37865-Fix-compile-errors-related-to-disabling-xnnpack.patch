@@ -1,0 +1,73 @@
+diff --git a/caffe2/CMakeLists.txt b/caffe2/CMakeLists.txt
+index 584d56e6a4..eff62b8251 100644
+--- a/caffe2/CMakeLists.txt
++++ b/caffe2/CMakeLists.txt
+@@ -83,15 +83,23 @@ if(INTERN_BUILD_ATEN_OPS)
+   list(APPEND Caffe2_DEPENDENCY_INCLUDE ${ATen_THIRD_PARTY_INCLUDE})
+ endif()
+ 
++# {Q/X,etc} NPACK support is enabled by default, if none of these options
++# are selected, turn this flag ON to incidate the support is disabled
++set(NNPACK_AND_FAMILY_DISABLED OFF)
++if(NOT (USE_NNPACK OR USE_QNNPACK OR USE_PYTORCH_QNNPACK OR USE_XNNPACK))
++  set(NNPACK_AND_FAMILY_DISABLED ON)
++endif()
++
+ # ---[ Caffe2 build
+ # Note: the folders that are being commented out have not been properly
+ # addressed yet.
+ 
+-if(NOT MSVC AND USE_XNNPACK)
+-  if(NOT TARGET fxdiv)
+-    set(FXDIV_BUILD_TESTS OFF CACHE BOOL "")
+-    set(FXDIV_BUILD_BENCHMARKS OFF CACHE BOOL "")
+-    add_subdirectory(
++# For pthreadpool_new_if_impl. TODO: Remove when threadpools are unitied.
++if(NOT MSVC AND NOT NNPACK_AND_FAMILY_DISABLED)
++  IF(NOT TARGET fxdiv)
++    SET(FXDIV_BUILD_TESTS OFF CACHE BOOL "")
++    SET(FXDIV_BUILD_BENCHMARKS OFF CACHE BOOL "")
++    ADD_SUBDIRECTORY(
+       "${FXDIV_SOURCE_DIR}"
+       "${CMAKE_BINARY_DIR}/FXdiv")
+   endif()
+@@ -654,7 +662,7 @@ elseif(USE_CUDA)
+ endif()
+ 
+ 
+-if(NOT MSVC AND USE_XNNPACK)
++if(NOT MSVC AND NOT NNPACK_AND_FAMILY_DISABLED)
+   TARGET_LINK_LIBRARIES(torch_cpu PRIVATE fxdiv)
+ endif()
+ 
+diff --git a/caffe2/utils/CMakeLists.txt b/caffe2/utils/CMakeLists.txt
+index 19b0b430e7..8039e1ea93 100644
+--- a/caffe2/utils/CMakeLists.txt
++++ b/caffe2/utils/CMakeLists.txt
+@@ -26,14 +26,18 @@ list(APPEND Caffe2_CPU_SRCS
+   utils/smart_tensor_printer.cc
+   utils/string_utils.cc)
+ 
+-if(USE_PTHREADPOOL)
+-  list(APPEND Caffe2_CPU_SRCS
+-    utils/threadpool/pthreadpool-cpp.cc)
+-  if(USE_INTERNAL_PTHREADPOOL_IMPL)
+-    list(APPEND Caffe2_CPU_SRCS
+-      utils/threadpool/pthreadpool.cc
+-      utils/threadpool/pthreadpool_impl.cc)
+-  endif()
++# ---[ threadpool/pthreadpool* is a local modification of the NNPACK
++# pthreadpool with a very similar interface. Neither NNPACK, nor this
++# thread pool supports Windows.
++if(NOT MSVC AND NOT NNPACK_AND_FAMILY_DISABLED)
++  add_definitions(-DUSE_INTERNAL_THREADPOOL_IMPL)
++  set(Caffe2_CPU_SRCS ${Caffe2_CPU_SRCS}
++          utils/threadpool/pthreadpool.cc
++          utils/threadpool/pthreadpool_impl.cc
++          utils/threadpool/pthreadpool_new_if_impl.c
++          utils/threadpool/ThreadPoolMobile.cc
++          utils/threadpool/ThreadPoolXNNPACK.cc
++          )
+ endif()
+ 
+ set(Caffe2_GPU_SRCS ${Caffe2_GPU_SRCS}

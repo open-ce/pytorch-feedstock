@@ -1,0 +1,105 @@
+{% set version = "1.6.0" %}
+
+package:
+  name: pytorch-base
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/pytorch/pytorch.git
+  git_rev: v{{ version }}
+  patches:
+    - nomnigraph.patch
+    - shared-linker.patch
+    - 01.pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64]
+    - 03-eigen-quiet-build-warning-for-missing-return.patch
+    - PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
+    - 04-onnx-tensorrt-TRT7.patch
+    - PR-41180-Do-not-add-NCCL-dependency-to-gloo.patch
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - libgcc-ng
+    - {{ compiler('fortran') }}
+
+  host:
+    - make
+    - cmake {{ cmake }}
+    - python {{ python }}
+    - numpy {{ numpy }}
+    - setuptools {{ setuptools }}
+    - pyyaml {{ pyyaml }}
+    - cffi {{ cffi }}
+    - typing {{ typing }}
+    - protobuf {{ protobuf }}
+    - onnx {{ onnx }}
+    - future {{ future }}
+    - openblas-devel {{ openblas }}
+    - numactl {{ numactl }}
+    - lmdb {{ lmdb }}
+    - leveldb {{ leveldb }}
+    - libgfortran-ng {{ libgfortran }}
+{% if build_type == 'cuda' %}
+    - cudatoolkit-dev {{ cudatoolkit }}
+    - cudnn {{ cudnn }}
+    - nccl {{ nccl }}
+    - magma {{ magma }}
+    - tensorrt {{ tensorrt }}
+{% endif %}
+
+  run:
+    - python {{ python }}
+    - numpy {{ numpy }}
+    - cffi {{ cffi }}
+    - protobuf {{ protobuf }}
+    - tabulate {{ tabulate }}
+    - onnx {{ onnx }}
+    - future {{ future }}
+    - pillow {{ pillow }}
+    - ninja {{ ninja }}
+    - typing {{ typing }}
+    - click {{ click }}
+    - networkx {{ networkx }}
+    - scikit-image {{ scikit_image }}
+    - scipy {{ scipy }}
+    - numactl {{ numactl }}
+    - numba {{ numba }}
+    - lmdb                        # versioning handled by run_exports
+    - leveldb                     # versioning handled by run_exports
+    - python-lmdb {{ python_lmdb }}
+    - pyyaml {{ pyyaml }}
+    - absl-py {{ absl_py }}
+    - libgfortran-ng              # versioning handled by run_exports
+    - _pytorch_select {{ pytorch_select_version }}
+{% if build_type == 'cuda' %}
+    - cudatoolkit {{ cudatoolkit }}
+    - cudnn {{ cudnn }}
+    - nccl {{ nccl }}
+    - tensorrt {{ tensorrt }}
+{% endif %}
+
+  run_constrained:
+    - tensorboard {{ tensorboard }}
+
+build:
+  number: 1
+{% if build_type == 'cpu' %}
+  string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
+{% else %}
+  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
+{% endif %}
+  detect_binary_files_with_prefix: False
+
+about:
+  home: http://pytorch.org/
+  license: BSD 3-Clause
+  license_family: BSD
+  license_file: LICENSE
+  summary: PyTorch is an optimized tensor library for deep learning using GPUs and CPUs.
+  description: |
+    PyTorch is an optimized tensor library for deep learning using GPUs and CPUs
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team
