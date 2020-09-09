@@ -1,0 +1,9 @@
+recipes:
+  - name : pytorch-select
+    path : select_recipe
+
+  - name : pytorch-base
+    path : recipe
+
+  - name : pytorch-meta
+    path : meta_recipe

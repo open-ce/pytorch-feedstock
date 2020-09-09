@@ -1,0 +1,21 @@
+# Recipe for metapackages to install CPU and GPU versions of PyTorch
+{% set version = "1.6.0" %}
+
+package:
+  name: pytorch{{ '-cpu' if build_type == 'cpu' else '' }}
+  version: {{ version }}
+build:
+  number: 1
+requirements:
+  run:
+    - pytorch-base     {{ version }}
+    - _pytorch_select  {{ pytorch_select_version }}
+    - torchtext        {{ torchtext }}
+    - torchvision-base {{ torchvision }}
+
+about:
+  summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} PyTorch variant
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team

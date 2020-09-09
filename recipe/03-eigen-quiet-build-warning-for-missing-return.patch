@@ -1,0 +1,19 @@
+Commit 909c602d519dc7e24298dc610a7343fb62a25f2f
+Author: "Richard J. Knight" <rjknight@us.ibm.com>
+Date: Mon, 5 Aug 2019 23:14:32 +0000
+
+diff --git a/third_party/eigen/Eigen/src/Core/arch/GPU/PacketMathHalf.h b/third_party/eigen/Eigen/src/Core/arch/GPU/PacketMathHalf.h
+index 020baa3..f297f49 100644
+--- a/third_party/eigen/Eigen/src/Core/arch/GPU/PacketMathHalf.h
++++ b/third_party/eigen/Eigen/src/Core/arch/GPU/PacketMathHalf.h
+@@ -146,6 +146,7 @@ template<> EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 pabs<half2>(const half2&
+ template<> EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE half2 ptrue<half2>(const half2& a) {
+   half2 result;
+   *(reinterpret_cast<unsigned*>(&(result))) = 0xffffffffu;
++  return result;
+ }
+ 
+ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void
+-- 
+1.8.3.1
+
