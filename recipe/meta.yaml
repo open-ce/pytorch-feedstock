@@ -14,7 +14,9 @@ source:
     - 03-eigen-quiet-build-warning-for-missing-return.patch
     - PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 04-onnx-tensorrt-TRT7.patch
+    - 05-cpp-extension.patch
     - PR-41180-Do-not-add-NCCL-dependency-to-gloo.patch
+    - PR-43931-Pass-CC-env-variable-as-ccbin-argument-to-nvcc.patch
 
 requirements:
   build:

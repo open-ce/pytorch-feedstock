@@ -1,0 +1,36 @@
+From fa5443935d4fe3e68a673fad7f885abbf0676d4a Mon Sep 17 00:00:00 2001
+From: Nikita Shulga <nshulga@fb.com>
+Date: Mon, 31 Aug 2020 19:09:16 -0700
+Subject: [PATCH] Pass CC env variable as ccbin argument to nvcc
+
+This is the common behaviour when one builds PyTorch (or any other CUDA project) using CMake, so it should be held true for Torch CUDA extensions as well
+---
+ torch/utils/cpp_extension.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/torch/utils/cpp_extension.py b/torch/utils/cpp_extension.py
+index c736221ff41dd..9064f713c7733 100644
+--- a/torch/utils/cpp_extension.py
++++ b/torch/utils/cpp_extension.py
+@@ -372,9 +372,11 @@ def append_std14_if_no_std_present(cflags) -> None:
+                 cflags.append(cpp_flag)
+ 
+         def unix_cuda_flags(cflags):
++            _ccbin = os.getenv("CC")
+             return (COMMON_NVCC_FLAGS +
+                     ['--compiler-options', "'-fPIC'"] +
+-                    cflags + _get_cuda_arch_flags(cflags))
++                    cflags + _get_cuda_arch_flags(cflags) +
++                    (['-ccbin', _ccbin] if _ccbin is not None else []))
+ 
+         def convert_to_absolute_paths_inplace(paths):
+             # Helper function. See Note [Absolute include_dirs]
+@@ -1611,6 +1613,8 @@ def _write_ninja_file_to_build_library(path,
+             cuda_flags += extra_cuda_cflags
+             if not any(flag.startswith('-std=') for flag in cuda_flags):
+                 cuda_flags.append('-std=c++14')
++            if os.getenv("CC") is not None:
++                cuda_flags = ['-ccbin', os.getenv("CC")] + cuda_flags
+     else:
+         cuda_flags = None
+ 
