@@ -1,13 +1,3 @@
-From fa5443935d4fe3e68a673fad7f885abbf0676d4a Mon Sep 17 00:00:00 2001
-From: Nikita Shulga <nshulga@fb.com>
-Date: Mon, 31 Aug 2020 19:09:16 -0700
-Subject: [PATCH] Pass CC env variable as ccbin argument to nvcc
-
-This is the common behaviour when one builds PyTorch (or any other CUDA project) using CMake, so it should be held true for Torch CUDA extensions as well
----
- torch/utils/cpp_extension.py | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
 diff --git a/torch/utils/cpp_extension.py b/torch/utils/cpp_extension.py
 index c736221ff41dd..9064f713c7733 100644
 --- a/torch/utils/cpp_extension.py
