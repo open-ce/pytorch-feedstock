@@ -17,6 +17,7 @@ source:
     - 05-cpp-extension.patch
     - PR-41180-Do-not-add-NCCL-dependency-to-gloo.patch
     - PR-43931-Pass-CC-env-variable-as-ccbin-argument-to-nvcc.patch
+    - 06-fix-duplicate-ccbin-argument-from-PR-43931.patch #fixes bug added by PR-43981.patch
 
 requirements:
   build:
