@@ -100,7 +100,7 @@ about:
   license_file: LICENSE
   summary: PyTorch is an optimized tensor library for deep learning using GPUs and CPUs.
   description: |
-    PyTorch is an optimized tensor library for deep learning using GPUs and CPUs
+    PyTorch is basically an optimized tensor library preferably used for deep learning using GPUs and CPUs.
 
 extra:
   recipe-maintainers:
