@@ -24,6 +24,7 @@ requirements:
     - {{ compiler('cxx') }}
     - libgcc-ng
     - {{ compiler('fortran') }}
+    - {{ compiler("cuda") }}
 
   host:
     - make
@@ -43,7 +44,6 @@ requirements:
     - leveldb {{ leveldb }}
     - libgfortran-ng {{ libgfortran }}
 {% if build_type == 'cuda' %}
-    - cudatoolkit-dev {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - magma {{ magma }}
@@ -92,6 +92,8 @@ build:
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% endif %}
   detect_binary_files_with_prefix: False
+  script_env:
+    - CUDA_HOME
 
 about:
   home: http://pytorch.org/
