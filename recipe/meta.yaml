@@ -93,7 +93,7 @@ build:
 {% endif %}
   detect_binary_files_with_prefix: False
   script_env:
-    - CUDA_HOME
+    - OPEN_CE_CUDA_HOME 
 
 about:
   home: http://pytorch.org/
