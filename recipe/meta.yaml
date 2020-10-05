@@ -24,7 +24,7 @@ requirements:
     - {{ compiler('cxx') }}
     - libgcc-ng
     - {{ compiler('fortran') }}
-    - {{ compiler("cuda") }}
+    - {{ compiler("cuda") }}        # [build_type == 'cuda']
 
   host:
     - make
