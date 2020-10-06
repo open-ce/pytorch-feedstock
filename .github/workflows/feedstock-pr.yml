@@ -1,0 +1,16 @@
+name: Open-CE Feedstock PR Tests
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: goanpeca/setup-miniconda@v1
+        with:
+          auto-update-conda: true
+          python-version: "3.7"
+      - uses: bethune-bryant/open-ce/.github/actions/feedstock-pr@add_feedstock_action
