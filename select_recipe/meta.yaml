@@ -3,7 +3,7 @@ package:
   version: {{ pytorch_select_version }}
 
 build:
-  number: 1
+  number: 2
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_{{ PKG_BUILDNUM }}
 {% else %}
