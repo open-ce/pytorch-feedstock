@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 jobs:
-  test:
+  optional_tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,4 +15,15 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.7"
-      - uses: bethune-bryant/open-ce/.github/actions/feedstock-pr@add_feedstock_action
+      - uses: bethune-bryant/open-ce/.github/actions/feedstock-optional-pr@add_feedstock_action
+  required_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '2'
+      - uses: goanpeca/setup-miniconda@v1
+        with:
+          auto-update-conda: true
+          python-version: "3.7"
+      - uses: bethune-bryant/open-ce/.github/actions/feedstock-required-pr@add_feedstock_action
