@@ -24,7 +24,6 @@ requirements:
     - {{ compiler('cxx') }}
     - libgcc-ng
     - {{ compiler('fortran') }}
-    - {{ compiler("cuda") }}        # [build_type == 'cuda']
 
   host:
     - make
@@ -92,8 +91,6 @@ build:
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% endif %}
   detect_binary_files_with_prefix: False
-  script_env:
-    - OPEN_CE_CUDA_HOME 
 
 about:
   home: http://pytorch.org/
