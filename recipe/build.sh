@@ -70,7 +70,7 @@ if [[ "$USE_CUDA" == 1 ]]; then
 fi
 
 # needed so cmake can find the conda version of librt.so
-export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/"
+export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/;${PREFIX}"
 
 # update onnx-tenssorrt submodule
 ARCH=`uname -p`
