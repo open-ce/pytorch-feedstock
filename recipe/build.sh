@@ -69,7 +69,7 @@ if [[ "$USE_CUDA" == 1 ]]; then
     export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 fi
 
-# needed so cmake can find the conda version of librt.so
+# needed so cmake can find the conda version of librt.so and other libraries and headers
 export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/;${PREFIX}"
 
 # update onnx-tenssorrt submodule
