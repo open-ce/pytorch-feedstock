@@ -72,6 +72,15 @@ fi
 # needed so cmake can find the conda version of librt.so and other libraries and headers
 export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/;${PREFIX}"
 
+# Create symlinks of cublas headers into CONDA_PREFIX
+if [ ! -d "$BUILD_PREFIX/include" ] 
+then
+    mkdir -p $CONDA_PREFIX/include
+fi
+
+find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
+export CMAKE_CXX_FLAGS="-I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
+
 # update onnx-tenssorrt submodule
 ARCH=`uname -p`
 cd third_party/onnx-tensorrt
