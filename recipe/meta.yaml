@@ -84,13 +84,15 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 4
+  number: 5
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% endif %}
   detect_binary_files_with_prefix: False
+  script_env:
+    - CUDA_HOME
 
 about:
   home: http://pytorch.org/
