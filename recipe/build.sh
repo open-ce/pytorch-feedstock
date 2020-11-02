@@ -72,11 +72,7 @@ if [[ "$USE_CUDA" == 1 ]]; then
     export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
     # Create symlinks of cublas headers into CONDA_PREFIX
-    if [ ! -d "$CONDA_PREFIX/include" ] 
-    then
-        mkdir -p $CONDA_PREFIX/include
-    fi
-
+    mkdir -p $CONDA_PREFIX/include
     find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
     export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 fi
