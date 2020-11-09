@@ -8,13 +8,16 @@ source:
   git_url: https://github.com/pytorch/pytorch.git
   git_rev: v{{ version }}
   patches:
-    - nomnigraph.patch
-    - shared-linker.patch
-    - 01.pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64]
-    - 03-eigen-quiet-build-warning-for-missing-return.patch
-    - PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
-    - 04-onnx-tensorrt-TRT7.patch
-    - 05-cpp-extension.patch
+    # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
+#    - nomnigraph.patch
+    - 0101-shared-linker.patch
+    - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64]
+    - 0103-eigen-quiet-build-warning-for-missing-return.patch
+    - 0104-onnx-tensorrt-TRT7.patch
+
+    # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
+    - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
+    - 0302-cpp-extension.patch
 
 requirements:
   build:
