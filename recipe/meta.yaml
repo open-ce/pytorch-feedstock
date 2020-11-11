@@ -9,7 +9,6 @@ source:
   git_rev: v{{ version }}
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
-#    - nomnigraph.patch
     - 0101-shared-linker.patch
     - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64]
     - 0103-eigen-quiet-build-warning-for-missing-return.patch
@@ -18,6 +17,7 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
+    - 0303-PR47677-remove-references-to-typing-module.patch
 
 requirements:
   build:
@@ -35,7 +35,6 @@ requirements:
     - setuptools {{ setuptools }}
     - pyyaml {{ pyyaml }}
     - cffi {{ cffi }}
-    - typing {{ typing }}
     - protobuf {{ protobuf }}
     - onnx {{ onnx }}
     - future {{ future }}
@@ -61,7 +60,6 @@ requirements:
     - future {{ future }}
     - pillow {{ pillow }}
     - ninja {{ ninja }}
-    - typing {{ typing }}
     - typing_extensions {{ typing_extensions }}  #[py36]    
     - click {{ click }}
     - networkx {{ networkx }}
