@@ -13,6 +13,8 @@ set -ex
 
 SCRIPT_DIR=$RECIPE_DIR/../scripts
 
+CUDA_VERSION="${cudatoolkit%.*}"
+
 # Anaconda pre-seeds CFLAGS and CXXFLAGS with preferred settings.
 # Among those for C++ is "-std=c++17". In CMakeLists.txt the standard
 # is set to c++11, using any other value introduces compile failures.
@@ -69,6 +71,9 @@ export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/;${PREFIX}"
 
 if [[ "$USE_CUDA" == 1 ]]; then
     export TORCH_CUDA_ARCH_LIST="3.7;6.0;7.0;7.5"
+    if [[ $CUDA_VERSION == '11' ]]; then
+        export TORCH_CUDA_ARCH_LIST="$TORCH_CUDA_ARCH_LIST;8.0"
+    fi
     export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
     # Create symlinks of cublas headers into CONDA_PREFIX
