@@ -85,11 +85,11 @@ fi
 # update onnx-tenssorrt submodule
 ARCH=`uname -p`
 cd third_party/onnx-tensorrt
-git checkout 84b5be1d6fc03564f2c0dba85a2ee75bad242c2e
+git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b
 cd ../..
 # apply fix for GLIBC
 if [[ "${ARCH}" == 'x86_64' ]]; then
-  git apply ${RECIPE_DIR}/02-onnx-tensorrt-Fix-for-GLIBC_2.14.patch
+  git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14.patch
 fi
 
 # install
