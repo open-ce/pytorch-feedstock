@@ -85,11 +85,20 @@ fi
 # update onnx-tenssorrt submodule
 ARCH=`uname -p`
 cd third_party/onnx-tensorrt
-git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b
-cd ../..
-# apply fix for GLIBC
-if [[ "${ARCH}" == 'x86_64' ]]; then
-  git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14.patch
+if [[ $cudatoolkit == '11.0' ]]; then
+    git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b   #corresponds to TRT 7.2
+    cd ../..
+    # apply fix for GLIBC
+    if [[ "${ARCH}" == 'x86_64' ]]; then
+        git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT72.patch
+    fi
+elif [[ $cudatoolkit == '10.2' ]]; then
+    git checkout 84b5be1d6fc03564f2c0dba85a2ee75bad242c2e   #corresponds to TRT 7.0
+    cd ../..
+    if [[ "${ARCH}" == 'x86_64' ]]; then
+        # apply fix for GLIBC
+	git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT70.patch
+    fi
 fi
 
 # install
