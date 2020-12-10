@@ -39,7 +39,11 @@ then
   # Enable GPU-related libraries
   export USE_CUDA=1
   export USE_CUDNN=1
-  export USE_TENSORRT=1
+  if [[ $PY_VER < 3.8 ]]; then
+    export USE_TENSORRT=1
+  else
+    export USE_TENSORRT=0
+  fi
 else
     echo "build_type was set to '$build_type', an invalid value."
     echo "build_type must be set to either 'cpu' or 'cuda'."
@@ -82,22 +86,25 @@ if [[ "$USE_CUDA" == 1 ]]; then
     export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 fi
 
-# update onnx-tenssorrt submodule
-ARCH=`uname -p`
-cd third_party/onnx-tensorrt
-if [[ $cudatoolkit == '11.0' ]]; then
-    git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b   #corresponds to TRT 7.2
-    cd ../..
-    # apply fix for GLIBC
-    if [[ "${ARCH}" == 'x86_64' ]]; then
-        git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT72.patch
-    fi
-elif [[ $cudatoolkit == '10.2' ]]; then
-    git checkout 84b5be1d6fc03564f2c0dba85a2ee75bad242c2e   #corresponds to TRT 7.0
-    cd ../..
-    if [[ "${ARCH}" == 'x86_64' ]]; then
+if [[ $PY_VER < 3.8 ]];
+then
+    # update onnx-tensorrt submodule
+    ARCH=`uname -p`
+    cd third_party/onnx-tensorrt
+    if [[ $cudatoolkit == '11.0' ]]; then
+        git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b   #corresponds to TRT 7.2
+        cd ../..
         # apply fix for GLIBC
-	git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT70.patch
+        if [[ "${ARCH}" == 'x86_64' ]]; then
+            git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT72.patch
+        fi
+    elif [[ $cudatoolkit == '10.2' ]]; then
+        git checkout 84b5be1d6fc03564f2c0dba85a2ee75bad242c2e   #corresponds to TRT 7.0
+        cd ../..
+        if [[ "${ARCH}" == 'x86_64' ]]; then
+            # apply fix for GLIBC
+            git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT70.patch
+        fi
     fi
 fi
 
