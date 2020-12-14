@@ -44,6 +44,9 @@ else
     exit 1
 fi
 
+export PYTORCH_BUILD_VERSION=${PKG_VERSION}
+export PYTORCH_BUILD_NUMBER=0
+
 # select OpenBLAS for BLAS
 export BLAS=OpenBLAS
 export USE_FBGEMM=0
@@ -56,7 +59,6 @@ export USE_NNPACK=0
 export USE_QNNPACK=0
 export USE_XNNPACK=0
 export USE_PYTORCH_QNNPACK=0
-
 export TH_BINARY_BUILD=1
 export USE_LMDB=1
 export USE_LEVELDB=1

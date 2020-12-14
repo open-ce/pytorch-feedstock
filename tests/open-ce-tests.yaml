@@ -1,0 +1,80 @@
+tests:
+  - name: Setup PyTorch Tests
+    command: |
+        git clone -b v$(python -c "import torch; print(torch.__version__)") https://github.com/pytorch/pytorch
+        cd pytorch
+        rm -rf torch
+        conda install -y pytest mock hypothesis psutil
+  - name: Run PyTorch test_c10d
+    command: |
+        cd pytorch
+        python test/distributed/test_c10d.py ComputeBucketAssignmentTest
+  - name: Run PyTorch test_cuda_primary_ctx
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_cuda_primary_ctx
+  - name: Run PyTorch test_multiprocessing
+    command: |
+        cd pytorch
+        python test/test_multiprocessing.py TestMultiprocessing.test_cuda_memory_allocation TestMultiprocessing.test_cuda_parameter_sharing TestMultiprocessing.test_fs
+  - name: Run PyTorch test_dataloader
+    command: |
+        cd pytorch
+        python test/test_dataloader.py  TestDataLoader
+  - name: Run PyTorch test_distributions
+    command: |
+        cd pytorch
+        python test/test_distributions.py TestDistributions.test_bernoulli TestDistributions.test_binomial TestDistributions.test_exponential TestDistributions.test_geometric TestDistributions.test_normal
+  - name: Run PyTorch test_indexing
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_indexing
+  - name: Run PyTorch test_nccl
+    command: |
+        cd pytorch
+        python test/run_test.py -i distributed/test_nccl
+  - name: Run PyTorch test_nn
+    command: |
+        cd pytorch
+        python test/test_nn.py TestNN.test_Conv1d TestNN.test_Conv2d_cuda TestNN.test_Conv3d_stride_cuda TestNN.test_ELU
+  - name: Run PyTorch test_numba_integration
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_numba_integration
+  - name: Run PyTorch test_optim
+    command: |
+        cd pytorch
+        python test/test_optim.py TestOptim.test_adagrad TestOptim.test_sgd
+  - name: Run PyTorch test_quantization
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_quantization
+  - name: Run PyTorch test_sparse
+    command: |
+        cd pytorch
+        python test/test_sparse.py TestCudaSparse.test_basic TestCudaUncoalescedSparse.test_basic TestSparse.test_basic TestUncoalescedSparse.test_basic
+  - name: Run PyTorch test_torch
+    command: |
+        cd pytorch
+        python test/test_torch.py TestTorchDeviceTypeCPU.test_add_cpu TestTorch.test_combinations TestTorchDeviceTypeCPU.test_dlpack_conversion_cpu
+  - name: Run PyTorch test_type_info
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_type_info
+  - name: Run PyTorch test_utils
+    command: |
+        cd pytorch
+        python test/test_utils.py TestCheckpoint.test_checkpoint TestCollectEnv.test_smoke TestDataLoader.test_random_seed
+  - name: Run PyTorch test_namedtuple_return_api
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_namedtuple_return_api
+{% if build_type=='cuda' %}
+  - name: Run PyTorch test_jit_fuser_te
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_jit_fuser_te
+        python test/run_test.py -i test_jit_fuser_legacy
+{% endif %}
+  - name: Clean tests
+    command: rm -rf pytorch
