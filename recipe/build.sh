@@ -13,6 +13,8 @@ set -ex
 
 SCRIPT_DIR=$RECIPE_DIR/../scripts
 
+CUDA_VERSION="${cudatoolkit%.*}"
+
 # Anaconda pre-seeds CFLAGS and CXXFLAGS with preferred settings.
 # Among those for C++ is "-std=c++17". In CMakeLists.txt the standard
 # is set to c++11, using any other value introduces compile failures.
@@ -37,7 +39,11 @@ then
   # Enable GPU-related libraries
   export USE_CUDA=1
   export USE_CUDNN=1
-  export USE_TENSORRT=1
+  if [[ $PY_VER < 3.8 ]]; then
+    export USE_TENSORRT=1
+  else
+    export USE_TENSORRT=0
+  fi
 else
     echo "build_type was set to '$build_type', an invalid value."
     echo "build_type must be set to either 'cpu' or 'cuda'."
@@ -71,6 +77,9 @@ export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/;${PREFIX}"
 
 if [[ "$USE_CUDA" == 1 ]]; then
     export TORCH_CUDA_ARCH_LIST="3.7;6.0;7.0;7.5"
+    if [[ $CUDA_VERSION == '11' ]]; then
+        export TORCH_CUDA_ARCH_LIST="$TORCH_CUDA_ARCH_LIST;8.0"
+    fi
     export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
     # Create symlinks of cublas headers into CONDA_PREFIX
@@ -79,14 +88,26 @@ if [[ "$USE_CUDA" == 1 ]]; then
     export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 fi
 
-# update onnx-tenssorrt submodule
-ARCH=`uname -p`
-cd third_party/onnx-tensorrt
-git checkout 84b5be1d6fc03564f2c0dba85a2ee75bad242c2e
-cd ../..
-# apply fix for GLIBC
-if [[ "${ARCH}" == 'x86_64' ]]; then
-  git apply ${RECIPE_DIR}/02-onnx-tensorrt-Fix-for-GLIBC_2.14.patch
+if [[ $PY_VER < 3.8 ]];
+then
+    # update onnx-tensorrt submodule
+    ARCH=`uname -p`
+    cd third_party/onnx-tensorrt
+    if [[ $cudatoolkit == '11.0' ]]; then
+        git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b   #corresponds to TRT 7.2
+        cd ../..
+        # apply fix for GLIBC
+        if [[ "${ARCH}" == 'x86_64' ]]; then
+            git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT72.patch
+        fi
+    elif [[ $cudatoolkit == '10.2' ]]; then
+        git checkout 84b5be1d6fc03564f2c0dba85a2ee75bad242c2e   #corresponds to TRT 7.0
+        cd ../..
+        if [[ "${ARCH}" == 'x86_64' ]]; then
+            # apply fix for GLIBC
+            git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT70.patch
+        fi
+    fi
 fi
 
 # install

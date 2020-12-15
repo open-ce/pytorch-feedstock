@@ -1,13 +1,13 @@
 diff --git a/torch/utils/cpp_extension.py b/torch/utils/cpp_extension.py
-index 1178fcd..3276e00 100644
+index 49fb798..5de3a05 100644
 --- a/torch/utils/cpp_extension.py
 +++ b/torch/utils/cpp_extension.py
-@@ -357,12 +357,17 @@ class BuildExtension(build_ext, object):
+@@ -361,12 +361,17 @@ class BuildExtension(build_ext, object):
          else:
              original_compile = self.compiler._compile
  
--        def append_std14_if_no_std_present(cflags):
-+        def append_std14_if_no_std_present(cflags, with_cuda):
+-        def append_std14_if_no_std_present(cflags) -> None:
++        def append_std14_if_no_std_present(cflags, with_cuda) -> None:
              # NVCC does not allow multiple -std to be passed, so we avoid
              # overriding the option if the user explicitly passed it.
 +            if with_cuda:
@@ -22,7 +22,7 @@ index 1178fcd..3276e00 100644
              if not any(flag.startswith(cpp_flag_prefix) for flag in cflags):
                  cflags.append(cpp_flag)
  
-@@ -394,11 +399,13 @@ class BuildExtension(build_ext, object):
+@@ -398,11 +403,13 @@ class BuildExtension(build_ext, object):
                          cflags = cflags + _get_rocm_arch_flags(cflags)
                      else:
                          cflags = unix_cuda_flags(cflags)
@@ -37,7 +37,7 @@ index 1178fcd..3276e00 100644
  
                  original_compile(obj, src, ext, cc_args, cflags, pp_opts)
              finally:
-@@ -447,7 +454,7 @@ class BuildExtension(build_ext, object):
+@@ -451,7 +458,7 @@ class BuildExtension(build_ext, object):
                  post_cflags = list(extra_postargs)
              if IS_HIP_EXTENSION:
                  post_cflags += COMMON_HIPCC_FLAGS
@@ -46,7 +46,7 @@ index 1178fcd..3276e00 100644
  
              cuda_post_cflags = None
              cuda_cflags = None
-@@ -462,7 +469,7 @@ class BuildExtension(build_ext, object):
+@@ -466,7 +473,7 @@ class BuildExtension(build_ext, object):
                      cuda_post_cflags = cuda_post_cflags + COMMON_HIPCC_FLAGS
                  else:
                      cuda_post_cflags = unix_cuda_flags(cuda_post_cflags)
@@ -55,7 +55,7 @@ index 1178fcd..3276e00 100644
                  cuda_cflags = [shlex.quote(f) for f in cuda_cflags]
                  cuda_post_cflags = [shlex.quote(f) for f in cuda_post_cflags]
  
-@@ -593,7 +600,7 @@ class BuildExtension(build_ext, object):
+@@ -597,7 +604,7 @@ class BuildExtension(build_ext, object):
                  post_cflags = extra_postargs['cxx']
              else:
                  post_cflags = list(extra_postargs)

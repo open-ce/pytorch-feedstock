@@ -151,7 +151,7 @@ index 96f1ad76f6..9b49b5c1b5 100644
                  if not parser.parse(model.read()):
                      for error in range(parser.num_errors):
 diff --git a/caffe2/python/trt/test_trt.py b/caffe2/python/trt/test_trt.py
-index e95cb4bd46..5902436134 100644
+index 39d37ca9fa..0df1206866 100644
 --- a/caffe2/python/trt/test_trt.py
 +++ b/caffe2/python/trt/test_trt.py
 @@ -170,6 +170,7 @@ class TensorRTOpTest(TestCase):

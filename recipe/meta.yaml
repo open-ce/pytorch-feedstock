@@ -1,4 +1,4 @@
-{% set version = "1.6.0" %}
+{% set version = "1.7.1" %}
 
 package:
   name: pytorch-base
@@ -8,15 +8,16 @@ source:
   git_url: https://github.com/pytorch/pytorch.git
   git_rev: v{{ version }}
   patches:
-    - nomnigraph.patch
-    - shared-linker.patch
-    - 01.pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64]
-    - 03-eigen-quiet-build-warning-for-missing-return.patch
-    - PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
-    - 04-onnx-tensorrt-TRT7.patch
-    - 05-cpp-extension.patch
-    - PR-41180-Do-not-add-NCCL-dependency-to-gloo.patch
-    - PR-43931-Pass-CC-env-variable-as-ccbin-argument-to-nvcc.patch
+    # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
+    - 0101-shared-linker.patch
+    - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64 and py<38]
+    - 0103-eigen-quiet-build-warning-for-missing-return.patch
+    - 0104-onnx-tensorrt-TRT7.patch                  # [py<38]
+
+    # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
+    - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
+    - 0302-cpp-extension.patch
+    - 0303-PR47677-remove-references-to-typing-module.patch
 
 requirements:
   build:
@@ -30,10 +31,10 @@ requirements:
     - cmake {{ cmake }}
     - python {{ python }}
     - numpy {{ numpy }}
+    - dataclasses {{ dataclasses }}          # [py36]
     - setuptools {{ setuptools }}
     - pyyaml {{ pyyaml }}
     - cffi {{ cffi }}
-    - typing {{ typing }}
     - protobuf {{ protobuf }}
     - onnx {{ onnx }}
     - future {{ future }}
@@ -46,7 +47,7 @@ requirements:
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - magma {{ magma }}
-    - tensorrt {{ tensorrt }}
+    - tensorrt {{ tensorrt }}                #[py<38]
 {% endif %}
 
   run:
@@ -59,7 +60,7 @@ requirements:
     - future {{ future }}
     - pillow {{ pillow }}
     - ninja {{ ninja }}
-    - typing {{ typing }}
+    - typing_extensions {{ typing_extensions }}  #[py36]    
     - click {{ click }}
     - networkx {{ networkx }}
     - scikit-image {{ scikit_image }}
@@ -77,14 +78,14 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
-    - tensorrt {{ tensorrt }}
+    - tensorrt {{ tensorrt }}                    #[py<38]
 {% endif %}
 
   run_constrained:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 5
+  number: 1
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}

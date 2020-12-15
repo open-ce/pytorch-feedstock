@@ -1,0 +1,33 @@
+diff --git a/third_party/onnx-tensorrt/CMakeLists.txt b/third_party/onnx-tensorrt/CMakeLists.txt
+index 9c609d2..0a50200 100644
+--- a/third_party/onnx-tensorrt/CMakeLists.txt
++++ b/third_party/onnx-tensorrt/CMakeLists.txt
+@@ -33,6 +33,9 @@ if (MSVC)
+     set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} /W4")
+ endif()
+ 
++set(MY_LIB_FIX "$ENV{PREFIX}/lib/libmemcpy-2.14.so")
++set(MY_LIB2_FIX "$ENV{PREFIX}/lib/libclock_gettime-2.17.so")
++
+ # Build the libraries with -fPIC
+ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+ 
+@@ -122,7 +125,7 @@ else()
+     HINTS  ${TENSORRT_ROOT} ${TENSORRT_BUILD} ${CUDA_TOOLKIT_ROOT_DIR}
+     PATH_SUFFIXES lib lib64 lib/x64)
+ endif()
+-set(TENSORRT_LIBRARY ${TENSORRT_LIBRARY_INFER} ${TENSORRT_LIBRARY_INFER_PLUGIN} ${TENSORRT_LIBRARY_MYELIN})
++set(TENSORRT_LIBRARY ${TENSORRT_LIBRARY_INFER} ${TENSORRT_LIBRARY_INFER_PLUGIN} ${TENSORRT_LIBRARY_MYELIN} ${MY_LIB_FIX} ${MY_LIB2_FIX})
+ MESSAGE(STATUS "Find TensorRT libs at ${TENSORRT_LIBRARY}")
+ find_package_handle_standard_args(
+   TENSORRT DEFAULT_MSG TENSORRT_INCLUDE_DIR TENSORRT_LIBRARY)
+@@ -167,8 +170,7 @@ target_link_libraries(onnx2trt PUBLIC ${PROTOBUF_LIB} onnx nvonnxparser_static $
+ # --------------------------------
+ add_executable(getSupportedAPITest ${API_TESTS_SOURCES})
+ target_include_directories(getSupportedAPITest PUBLIC ${ONNX_INCLUDE_DIRS} ${CUDNN_INCLUDE_DIR})
+-target_link_libraries(getSupportedAPITest PUBLIC ${PROTOBUF_LIB} nvonnxparser_static ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS}) #${CUDA_LIBRARIES} 
+-
++target_link_libraries(getSupportedAPITest PUBLIC ${PROTOBUF_LIB} nvonnxparser_static ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS} ${MY_LIB_FIX} ${MY_LIB2_FIX}) #${CUDA_LIBRARIES}
+ # --------------------------------
+ # Installation
+ # --------------------------------
