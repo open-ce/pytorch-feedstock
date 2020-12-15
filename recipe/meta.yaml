@@ -60,7 +60,7 @@ requirements:
     - future {{ future }}
     - pillow {{ pillow }}
     - ninja {{ ninja }}
-    - typing_extensions {{ typing_extensions }}  #[py36]    
+    - typing_extensions {{ typing_extensions }}  #[py<38]
     - click {{ click }}
     - networkx {{ networkx }}
     - scikit-image {{ scikit_image }}
