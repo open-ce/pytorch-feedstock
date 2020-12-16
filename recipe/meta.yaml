@@ -60,7 +60,7 @@ requirements:
     - future {{ future }}
     - pillow {{ pillow }}
     - ninja {{ ninja }}
-    - typing_extensions {{ typing_extensions }}  #[py36]    
+    - typing_extensions {{ typing_extensions }}  #[py<38]
     - click {{ click }}
     - networkx {{ networkx }}
     - scikit-image {{ scikit_image }}
@@ -85,7 +85,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 1
+  number: 2
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
