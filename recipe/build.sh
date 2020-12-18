@@ -89,6 +89,11 @@ if [[ "$USE_CUDA" == 1 ]]; then
     export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 fi
 
+# use v1.6.0 for onnx submodule
+cd third_party/onnx
+git checkout 553df22c67bee5f0fe6599cff60f1afc6748c635
+cd ../..
+
 if [[ $PY_VER < 3.8 ]];
 then
     # update onnx-tensorrt submodule
