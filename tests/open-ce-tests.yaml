@@ -3,7 +3,7 @@ tests:
     command: |
         git clone -b v$(python -c "import torch; print(torch.__version__)") https://github.com/pytorch/pytorch
         cd pytorch
-        git apply ../pytorch-feedstock/recipe/0304-PR47800-skip-tests-without-fbgemm-support.patch
+        git apply ${FEEDSTOCK_DIR}/recipe/0304-PR47800-skip-tests-without-fbgemm-support.patch
         rm -rf torch
         conda install -y pytest mock hypothesis psutil
 {% if python=='3.6' %}
