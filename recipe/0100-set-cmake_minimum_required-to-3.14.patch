@@ -1,0 +1,58 @@
+From 0d9314d45cbf1b49c9a9ef5e255b35c748d0c1a7 Mon Sep 17 00:00:00 2001
+From: Deepali Chourasia <deepch23@in.ibm.com>
+Date: Thu, 24 Dec 2020 11:44:05 +0000
+Subject: [PATCH] set cmake_minimum_required to 3.14
+
+---
+ CMakeLists.txt               | 2 +-
+ tools/setup_helpers/cmake.py | 6 +++---
+ torch/CMakeLists.txt         | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0d1225ab45..266593b858 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+ #cmake_policy(SET CMP0022 NEW)
+ #cmake_policy(SET CMP0023 NEW)
+ 
+diff --git a/tools/setup_helpers/cmake.py b/tools/setup_helpers/cmake.py
+index 83253cc3a5..9e5265f300 100644
+--- a/tools/setup_helpers/cmake.py
++++ b/tools/setup_helpers/cmake.py
+@@ -116,13 +116,13 @@ class CMake:
+             return cmake_command
+         cmake3 = which('cmake3')
+         cmake = which('cmake')
+-        if cmake3 is not None and CMake._get_version(cmake3) >= LooseVersion("3.5.0"):
++        if cmake3 is not None and CMake._get_version(cmake3) >= LooseVersion("3.14.0"):
+             cmake_command = 'cmake3'
+             return cmake_command
+-        elif cmake is not None and CMake._get_version(cmake) >= LooseVersion("3.5.0"):
++        elif cmake is not None and CMake._get_version(cmake) >= LooseVersion("3.14.0"):
+             return cmake_command
+         else:
+-            raise RuntimeError('no cmake or cmake3 with version >= 3.5.0 found')
++            raise RuntimeError('no cmake or cmake3 with version >= 3.14.0 found')
+ 
+     @staticmethod
+     def _get_version(cmd):
+diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
+index e5b6e36251..57b09a17c6 100644
+--- a/torch/CMakeLists.txt
++++ b/torch/CMakeLists.txt
+@@ -2,7 +2,7 @@
+ # Now it only builds the Torch python bindings.
+ 
+ if(NOT CAFFE2_CMAKE_BUILDING_WITH_MAIN_REPO)
+-  cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
++  cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+   project(torch CXX C)
+   find_package(torch REQUIRED)
+   option(USE_CUDA "Use CUDA" ON)
+-- 
+2.18.4
+
