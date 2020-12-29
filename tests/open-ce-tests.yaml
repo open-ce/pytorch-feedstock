@@ -9,6 +9,9 @@ tests:
 {% if python=='3.6' %}
         conda install -y dataclasses
 {% endif %}
+{% if python<'3.8' %}
+        conda install -y typing_extensions
+{% endif %}
   - name: Run PyTorch test_c10d
     command: |
         cd pytorch
