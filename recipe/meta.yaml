@@ -14,6 +14,7 @@ source:
     - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64 and py<38]
     - 0103-eigen-quiet-build-warning-for-missing-return.patch
     - 0104-onnx-tensorrt-TRT7.patch                  # [py<38]
+    - 0105-workaround-for-compile-issue-with-glibc-memcpy-GLIBC.patch   #[build_type=='cuda' and cudatoolkit=='11.0']
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
@@ -49,6 +50,7 @@ requirements:
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - magma {{ magma }}
+    - libmemcpy_wrapper                      #[x86_64]
     - tensorrt {{ tensorrt }}                #[py<38]
 {% endif %}
 
@@ -80,6 +82,7 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
+    - libmemcpy_wrapper                          #[x86_64]
     - tensorrt {{ tensorrt }}                    #[py<38]
 {% endif %}
 

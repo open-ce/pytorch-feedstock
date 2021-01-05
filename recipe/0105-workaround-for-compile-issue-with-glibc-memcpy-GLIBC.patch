@@ -1,0 +1,35 @@
+From 3e82a184931d691885df691c5fbb408c1db415ad Mon Sep 17 00:00:00 2001
+From: Deepali Chourasia <deepch23@in.ibm.com>
+Date: Tue, 5 Jan 2021 02:20:12 -0500
+Subject: [PATCH] workaround for compile issue with glibc memcpy@GLIBC_2.14
+ problem with libcudnn.so
+
+---
+ cmake/public/cuda.cmake | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/cmake/public/cuda.cmake b/cmake/public/cuda.cmake
+index 8b60915f7e..0d15d9dc68 100644
+--- a/cmake/public/cuda.cmake
++++ b/cmake/public/cuda.cmake
+@@ -256,6 +256,7 @@ endif()
+ # cudnn
+ # static linking is handled by USE_STATIC_CUDNN environment variable
+ if(CAFFE2_USE_CUDNN)
++  set(MY_LIB1_FIX "$ENV{PREFIX}/lib/libmemcpy-2.14.so")
+   add_library(caffe2::cudnn UNKNOWN IMPORTED)
+   set_property(
+       TARGET caffe2::cudnn PROPERTY IMPORTED_LOCATION
+@@ -263,6 +264,9 @@ if(CAFFE2_USE_CUDNN)
+   set_property(
+       TARGET caffe2::cudnn PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+       ${CUDNN_INCLUDE_PATH})
++  set_property(
++      TARGET caffe2::cudnn PROPERTY INTERFACE_LINK_LIBRARIES
++      ${MY_LIB1_FIX})
+   if(CUDNN_STATIC AND NOT WIN32)
+     set_property(
+         TARGET caffe2::cudnn PROPERTY INTERFACE_LINK_LIBRARIES
+-- 
+2.23.0
+
