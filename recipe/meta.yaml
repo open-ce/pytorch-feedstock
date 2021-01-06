@@ -28,6 +28,7 @@ requirements:
     - libgcc-ng
     - {{ compiler('fortran') }}
     - git >={{ git }}
+    - patch
 
   host:
     - make
