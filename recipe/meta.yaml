@@ -14,6 +14,7 @@ source:
     - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64 and py<38]
     - 0103-eigen-quiet-build-warning-for-missing-return.patch
     - 0104-onnx-tensorrt-TRT7.patch                  # [py<38]
+    - 0105-workaround-for-compile-issue-with-glibc-memcpy-GLIBC.patch   #[x86_64 and py==38 and build_type=='cuda' and cudatoolkit=='11.0']
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
@@ -27,6 +28,7 @@ requirements:
     - libgcc-ng
     - {{ compiler('fortran') }}
     - git >={{ git }}
+    - patch
 
   host:
     - make
@@ -49,6 +51,7 @@ requirements:
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - magma {{ magma }}
+    - libmemcpy_wrapper                      #[x86_64 and cudatoolkit=='11.0']
     - tensorrt {{ tensorrt }}                #[py<38]
 {% endif %}
 
@@ -80,6 +83,7 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
+    - libmemcpy_wrapper                          #[x86_64 and cudatoolkit=='11.0']
     - tensorrt {{ tensorrt }}                    #[py<38]
 {% endif %}
 
@@ -87,7 +91,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 7
+  number: 8
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
