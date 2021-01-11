@@ -1,0 +1,34 @@
+diff --git a/test/jit/test_recursive_script.py b/test/jit/test_recursive_script.py
+index 82347b8ca9..58248e9352 100644
+--- a/test/jit/test_recursive_script.py
++++ b/test/jit/test_recursive_script.py
+@@ -2,7 +2,10 @@ import unittest
+ import os
+ import sys
+ import typing
+-import typing_extensions
++if sys.version_info[:2] > (3, 7):
++    from typing import Final
++else:
++    from typing_extensions import Final
+ from typing import List, Dict, Optional, Tuple
+ 
+ import torch
+@@ -174,7 +177,7 @@ class TestRecursiveScript(JitTestCase):
+         self.checkModule(M1(), (torch.randn(2, 2),))
+ 
+         class M2(torch.nn.Module):
+-            x : typing_extensions.Final[int]
++            x : Final[int]
+ 
+             def __init__(self):
+                 super().__init__()
+@@ -187,7 +190,7 @@ class TestRecursiveScript(JitTestCase):
+ 
+         if sys.version_info[:2] >= (3, 8):
+             class M3(torch.nn.Module):
+-                x : typing.Final[int]
++                x : Final[int]
+ 
+                 def __init__(self):
+                     super().__init__()
