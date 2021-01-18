@@ -14,6 +14,12 @@ tests:
 {% if python<'3.8' %}
         conda install -y typing_extensions
 {% endif %}
+        ARCH=$(arch)
+        if test "${ARCH}" == "x86_64"
+        then
+            ARCH="64"
+        fi
+        conda install gxx_linux-${ARCH}
   - name: Run PyTorch test_c10d
     command: |
         cd pytorch
