@@ -25,7 +25,8 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - libgcc-ng
+    - libgcc-ng {{ libgcc }}
+    - libstdcxx-ng {{ libstdcxx }}
     - {{ compiler('fortran') }}
     - git >={{ git }}
     - patch
@@ -46,6 +47,8 @@ requirements:
     - numactl {{ numactl }}
     - lmdb {{ lmdb }}
     - leveldb {{ leveldb }}
+    - libgcc-ng {{ libgcc }}
+    - libstdcxx-ng {{ libstdcxx }}
     - libgfortran-ng {{ libgfortran }}
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
