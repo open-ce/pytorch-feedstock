@@ -1,0 +1,62 @@
+third_party_packages:
+- name: cub
+  license: BSD-equivalent
+  url:
+    - https://github.com/NVlabs/cub/archive/1.7.3.zip
+  version: 1.7.3
+- name: googletest
+  license: BSD-equivalent
+  url:
+    - https://github.com/google/googletest/archive/release-1.8.0.tar.gz
+  version: 1.8.0
+- name: cub
+  license: BSD-equivalent
+  url:
+    - https://github.com/NVlabs/cub/archive/1.8.0.zip
+  version: 1.8.0
+- name: eigen
+  license: Apache-2
+  url:
+    - https://github.com/eigenteam/eigen-git-mirror.git
+  version: 3.3.0
+- name: sleef
+  license: BSL (Boost)
+  url:
+    - https://github.com/shibatch/sleef/archive/3.4.1.tar.gz
+  version: 3.4.1
+- name: onnx-tensorrt
+  license: MIT
+  url:
+    - https://github.com/onnx/onnx-tensorrt.git
+  version: v5.0
+- name: pytorch-examples
+  license: BSD-equivalent
+  url:
+    - https://github.com/pytorch/examples.git
+  version: "0634306"
+- name: cpuinfo
+  license: BSD-equivalent
+  url:
+    - https://github.com/Maratyszcza/cpuinfo.git
+  version: 89fe169
+- name: foxi
+  license: MIT
+  url:
+    - https://github.com/houseroad/foxi.git
+  version: 8f74bc4
+- name: FXdiv
+  license: MIT
+  url:
+    - https://github.com/Maratyszcza/FXdiv.git
+  version: b742d11
+- name: gloo
+  license: BSD-equivalent
+  url:
+    - https://github.com/facebookincubator/gloo.git
+  version: ca528e3
+- name: FP16
+  license: MIT
+  url:
+    - https://github.com/Maratyszcza/FP16.git
+  version: febbb1c
+
