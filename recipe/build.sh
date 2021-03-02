@@ -75,6 +75,7 @@ export USE_LMDB=1
 export USE_LEVELDB=1
 export USE_OPENMP=1
 export USE_NINJA=0
+export USE_MPI=0
 
 export BUILD_CUSTOM_PROTOBUF=OFF
 
