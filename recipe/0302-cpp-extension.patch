@@ -1,9 +1,13 @@
 diff --git a/torch/utils/cpp_extension.py b/torch/utils/cpp_extension.py
-index ca67303..3b02f5c 100644
+index ca67303..1ad60ec 100644
 --- a/torch/utils/cpp_extension.py
 +++ b/torch/utils/cpp_extension.py
-@@ -411,9 +411,14 @@ class BuildExtension(build_ext, object):
-         def append_std14_if_no_std_present(cflags) -> None:
+@@ -408,12 +408,17 @@ class BuildExtension(build_ext, object):
+         else:
+             original_compile = self.compiler._compile
+ 
+-        def append_std14_if_no_std_present(cflags) -> None:
++        def append_std14_if_no_std_present(cflags, with_cuda) -> None:
              # NVCC does not allow multiple -std to be passed, so we avoid
              # overriding the option if the user explicitly passed it.
 +            if with_cuda:
