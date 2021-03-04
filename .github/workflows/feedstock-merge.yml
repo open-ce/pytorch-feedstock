@@ -2,7 +2,7 @@ name: Open-CE Feedstock Merge Triggers
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   version_branch:
@@ -15,4 +15,4 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.8"
-      - uses: open-ce/open-ce/.github/actions/feedstock-merge@master
+      - uses: open-ce/open-ce/.github/actions/feedstock-merge@main
