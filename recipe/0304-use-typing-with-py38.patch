@@ -1,0 +1,16 @@
+diff --git a/tools/codegen/gen.py b/tools/codegen/gen.py
+index 4b8e59d..82f0acf 100644
+--- a/tools/codegen/gen.py
++++ b/tools/codegen/gen.py
+@@ -1,6 +1,10 @@
+ import os
+ from typing import List, Dict, Optional, Tuple, Set, Callable, Any, Union, Sequence
+-from typing_extensions import Literal
++import sys
++if sys.version_info[:2] > (3, 7):
++    from typing import Literal 
++else:
++    from typing_extensions import Literal
+ import yaml
+ from collections import OrderedDict, defaultdict
+ import argparse

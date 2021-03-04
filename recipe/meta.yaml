@@ -1,4 +1,4 @@
-{% set version = "1.7.1" %}
+{% set version = "1.8.0" %}
 
 package:
   name: pytorch-base
@@ -6,7 +6,7 @@ package:
 
 source:
   git_url: https://github.com/pytorch/pytorch.git
-  git_rev: v{{ version }}
+  git_rev: v{{ version }}-rc5
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
     - 0100-set-cmake_minimum_required-to-3.14.patch
@@ -19,7 +19,8 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
-    - 0303-PR47677-remove-references-to-typing-module.patch
+    - 0303-PR52091-Update-vec_mergee-operand-specifiers.patch
+    - 0304-use-typing-with-py38.patch
 
 requirements:
   build:
@@ -47,6 +48,7 @@ requirements:
     - lmdb {{ lmdb }}
     - leveldb {{ leveldb }}
     - libgfortran-ng {{ libgfortran }}
+    - typing_extensions {{ typing_extensions }}  #[py<38]
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
@@ -91,7 +93,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 11
+  number: 0 
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
