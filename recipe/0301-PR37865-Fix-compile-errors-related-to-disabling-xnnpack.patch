@@ -1,8 +1,8 @@
 diff --git a/caffe2/CMakeLists.txt b/caffe2/CMakeLists.txt
-index 584d56e6a4..eff62b8251 100644
+index 7bef849..cc66330 100644
 --- a/caffe2/CMakeLists.txt
 +++ b/caffe2/CMakeLists.txt
-@@ -83,15 +83,23 @@ if(INTERN_BUILD_ATEN_OPS)
+@@ -94,15 +94,23 @@ if(INTERN_BUILD_ATEN_OPS)
    list(APPEND Caffe2_DEPENDENCY_INCLUDE ${ATen_THIRD_PARTY_INCLUDE})
  endif()
  
@@ -31,9 +31,9 @@ index 584d56e6a4..eff62b8251 100644
        "${FXDIV_SOURCE_DIR}"
        "${CMAKE_BINARY_DIR}/FXdiv")
    endif()
-@@ -654,7 +662,7 @@ elseif(USE_CUDA)
+@@ -855,7 +863,7 @@ if(USE_CUDA OR USE_ROCM)
+   target_include_directories(${TORCHLIB_FLAVOR} PRIVATE "${CMAKE_BINARY_DIR}/include")
  endif()
- 
  
 -if(NOT MSVC AND USE_XNNPACK)
 +if(NOT MSVC AND NOT NNPACK_AND_FAMILY_DISABLED)
@@ -41,10 +41,10 @@ index 584d56e6a4..eff62b8251 100644
  endif()
  
 diff --git a/caffe2/utils/CMakeLists.txt b/caffe2/utils/CMakeLists.txt
-index 19b0b430e7..8039e1ea93 100644
+index 6219050..587948e 100644
 --- a/caffe2/utils/CMakeLists.txt
 +++ b/caffe2/utils/CMakeLists.txt
-@@ -26,14 +26,18 @@ list(APPEND Caffe2_CPU_SRCS
+@@ -35,14 +35,18 @@ list(APPEND Caffe2_CPU_SRCS
    utils/smart_tensor_printer.cc
    utils/string_utils.cc)
  
