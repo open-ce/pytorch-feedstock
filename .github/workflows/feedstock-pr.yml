@@ -2,7 +2,7 @@ name: Open-CE Feedstock PR Tests
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   optional_tests:
@@ -15,7 +15,7 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.7"
-      - uses: open-ce/open-ce/.github/actions/feedstock-optional-pr@master
+      - uses: open-ce/open-ce/.github/actions/feedstock-optional-pr@main
   required_tests:
     runs-on: ubuntu-latest
     steps:
@@ -26,4 +26,4 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.7"
-      - uses: open-ce/open-ce/.github/actions/feedstock-required-pr@master
+      - uses: open-ce/open-ce/.github/actions/feedstock-required-pr@main
