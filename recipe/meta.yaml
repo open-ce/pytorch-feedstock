@@ -6,7 +6,7 @@ package:
 
 source:
   git_url: https://github.com/pytorch/pytorch.git
-  git_rev: v{{ version }}-rc5
+  git_rev: v{{ version }}
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
     - 0100-set-cmake_minimum_required-to-3.14.patch
@@ -14,13 +14,14 @@ source:
     - 0103-eigen-quiet-build-warning-for-missing-return.patch
     - 0104-onnx-tensorrt-TRT7.patch                  # [py<38]
     - 0105-workaround-for-compile-issue-with-glibc-memcpy-GLIBC.patch   #[x86_64 and py==38 and build_type=='cuda' and cudatoolkit=='11.0']
+    - 0106-disable-TP_ENABLE_SHM.patch
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
     - 0303-PR52091-Update-vec_mergee-operand-specifiers.patch
     - 0304-use-typing-with-py38.patch
-
+    
 requirements:
   build:
     - {{ compiler('c') }}
