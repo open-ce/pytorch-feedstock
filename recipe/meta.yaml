@@ -14,7 +14,8 @@ source:
     - 0103-eigen-quiet-build-warning-for-missing-return.patch
     - 0104-onnx-tensorrt-TRT7.patch                  # [py<38]
     - 0105-workaround-for-compile-issue-with-glibc-memcpy-GLIBC.patch   #[x86_64 and py==38 and build_type=='cuda' and cudatoolkit=='11.0']
-    - 0106-disable-TP_ENABLE_SHM.patch
+    - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
+    - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
