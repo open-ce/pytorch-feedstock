@@ -91,7 +91,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 11
+  number: 12
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
