@@ -4,7 +4,6 @@ tests:
         conda install -y git
         git clone -b v$(python -c "import torch; print(torch.__version__)") https://github.com/pytorch/pytorch
         cd pytorch
-        git apply ${FEEDSTOCK_DIR}/recipe/0304-PR47800-skip-tests-without-fbgemm-support.patch
         git apply ${FEEDSTOCK_DIR}/recipe/0305-fix-test_constants_with_final.patch
         rm -rf torch
         conda install -y pytest mock hypothesis psutil
@@ -39,7 +38,7 @@ tests:
   - name: Run PyTorch test_distributions
     command: |
         cd pytorch
-        python test/test_distributions.py TestDistributions.test_bernoulli TestDistributions.test_binomial TestDistributions.test_exponential TestDistributions.test_geometric TestDistributions.test_normal
+        python test/distributions/test_distributions.py TestDistributions.test_bernoulli TestDistributions.test_binomial TestDistributions.test_exponential TestDistributions.test_geometric TestDistributions.test_normal
   - name: Run PyTorch test_indexing
     command: |
         cd pytorch
@@ -71,7 +70,7 @@ tests:
   - name: Run PyTorch test_torch
     command: |
         cd pytorch
-        python test/test_torch.py TestTorchDeviceTypeCPU.test_add_cpu TestTorch.test_combinations TestTorchDeviceTypeCPU.test_dlpack_conversion_cpu
+        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_dlpack_conversion_cpu
   - name: Run PyTorch test_type_info
     command: |
         cd pytorch
