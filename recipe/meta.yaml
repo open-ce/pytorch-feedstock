@@ -71,7 +71,6 @@ requirements:
     - typing_extensions {{ typing_extensions }}  #[py<38]
     - click {{ click }}
     - networkx {{ networkx }}
-    - scikit-image {{ scikit_image }}
     - scipy {{ scipy }}
     - numactl {{ numactl }}
     - numba {{ numba }}
