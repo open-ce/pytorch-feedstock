@@ -64,18 +64,14 @@ requirements:
     - onnx {{ onnx }}
     - future {{ future }}
     - pillow {{ pillow }}
-    - ninja {{ ninja }}
     - typing_extensions {{ typing_extensions }}  #[py<38]
     - click {{ click }}
     - networkx {{ networkx }}
     - scipy {{ scipy }}
     - numactl {{ numactl }}
-    - numba {{ numba }}
     - lmdb                        # versioning handled by run_exports
     - leveldb                     # versioning handled by run_exports
-    - python-lmdb {{ python_lmdb }}
     - pyyaml {{ pyyaml }}
-    - absl-py {{ absl_py }}
     - libgfortran-ng              # versioning handled by run_exports
     - _pytorch_select {{ pytorch_select_version }}
 {% if build_type == 'cuda' %}
@@ -90,7 +86,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 13
+  number: 14
 {% if build_type == 'cpu' %}
   string: {{ build_type }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 {% else %}
