@@ -1,0 +1,12 @@
+diff --git a/test/test_jit_fuser_te.py b/test/test_jit_fuser_te.py
+index 88f8c69..a560a93 100644
+--- a/test/test_jit_fuser_te.py
++++ b/test/test_jit_fuser_te.py
+@@ -403,6 +403,7 @@ class TestTEFuser(JitTestCase):
+                 s = self.checkScript(f, inputs)
+                 self.assertAllFused(s.graph_for(*inputs))
+ 
++    @unittest.skip("temporarily disable")
+     def test_clamp(self):
+         for device in self.devices:
+             def func2(a, b):
