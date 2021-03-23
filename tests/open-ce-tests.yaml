@@ -5,6 +5,7 @@ tests:
         git clone -b v$(python -c "import torch; print(torch.__version__)") https://github.com/pytorch/pytorch
         cd pytorch
         git apply ${FEEDSTOCK_DIR}/recipe/0305-fix-test_constants_with_final.patch
+        git apply ${FEEDSTOCK_DIR}/recipe/0306-skip-test_clamp.patch
         rm -rf torch
         conda install -y pytest mock hypothesis psutil numba
 {% if python=='3.6' %}
