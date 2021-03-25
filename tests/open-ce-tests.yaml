@@ -7,7 +7,7 @@ tests:
         git apply ${FEEDSTOCK_DIR}/recipe/0304-PR47800-skip-tests-without-fbgemm-support.patch
         git apply ${FEEDSTOCK_DIR}/recipe/0305-fix-test_constants_with_final.patch
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba
+        conda install -y pytest mock hypothesis psutil numba=0.52
 {% if python=='3.6' %}
         conda install -y dataclasses
 {% endif %}
