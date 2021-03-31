@@ -6,4 +6,4 @@ These feedstock repositories do not contain the source code for the correspondin
 
 The [**Open-CE**](https://github.com/open-ce) project has a separate central controlling repository which coordinates the overall build, dependencies, and documentation requirements of the project. The central repository is named for the project itself, [open-ce](https://github.com/open-ce/open-ce).
 
-For more information about the project, and for instruction on how to build this and other feedstock packages, please refer to the **Open-CE** [README.md](https://github.com/open-ce/open-ce/blob/master/README.md) file in the central repository. This should be your reference starting point before turning to the feedstock repositories themselves.
+For more information about the project, and for instruction on how to build this and other feedstock packages, please refer to the **Open-CE** [README.md](https://github.com/open-ce/open-ce/blob/main/README.md) file in the central repository. This should be your reference starting point before turning to the feedstock repositories themselves.
