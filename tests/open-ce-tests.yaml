@@ -7,7 +7,7 @@ tests:
         git apply ${FEEDSTOCK_DIR}/recipe/0305-fix-test_constants_with_final.patch
         git apply ${FEEDSTOCK_DIR}/recipe/0306-skip-test_clamp.patch
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba=0.50
+        conda install -y pytest mock hypothesis psutil numba=0.52
 {% if python=='3.6' %}
         conda install -y dataclasses
 {% endif %}
