@@ -100,7 +100,7 @@ cd third_party/onnx
 git checkout 553df22c67bee5f0fe6599cff60f1afc6748c635
 cd ../..
 
-if [[ $PY_VER < 3.8 ]];
+if [[ $PY_VER < 3.8 ]] && [[ $cudatoolkit ]];
 then
     # update onnx-tensorrt submodule
     ARCH=`uname -p`
@@ -119,6 +119,9 @@ then
             # apply fix for GLIBC
             git apply ${RECIPE_DIR}/0300-onnx-tensorrt-Fix-for-GLIBC_2.14_TRT70.patch
         fi
+    else
+        # fail safe to get back to /
+        cd ../..
     fi
 fi
 

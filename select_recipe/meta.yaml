@@ -3,12 +3,8 @@ package:
   version: {{ pytorch_select_version }}
 
 build:
-  number: 1
-{% if build_type == 'cpu' %}
+  number: 2
   string: {{ build_type }}_{{ PKG_BUILDNUM }}
-{% else %}
-  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_{{ PKG_BUILDNUM }}
-{% endif %}
 
 about:
   summary : Package used to select the specific PyTorch build variant
