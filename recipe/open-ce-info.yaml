@@ -49,3 +49,33 @@ third_party_packages:
   url:
     - https://github.com/Maratyszcza/FP16.git
   version: 4dfe081
+- name: benchmark
+  license: Apache License
+  url:
+    - https://github.com/google/benchmark.git
+  version: 505be96
+- name: cpuinfo
+  license: BSD-2-Clause
+  url:
+    - https://github.com/pytorch/cpuinfo.git
+  version: 63b2545
+- name: fmt
+  license:
+  url:
+    - https://github.com/fmtlib/fmt.git
+  version: cd4af11
+- name: miniz
+  license:
+  url:
+    - https://github.com/pytorch/pytorch/tree/v1.7.1/third_party/miniz-2.0.8
+  version: 2.0.8
+- name: onnx
+  license: Apache License
+  url:
+    - https://github.com/onnx/onnx.git
+  version: 553df2
+- name: pybind11
+  license:
+  url:
+    - https://github.com/seemethere/pybind11.git
+  version: a1cb7c2
