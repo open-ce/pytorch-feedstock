@@ -60,12 +60,12 @@ third_party_packages:
     - https://github.com/pytorch/cpuinfo.git
   version: 63b2545
 - name: fmt
-  license:
+  license: MIT
   url:
     - https://github.com/fmtlib/fmt.git
   version: cd4af11
 - name: miniz
-  license:
+  license: MIT
   url:
     - https://github.com/pytorch/pytorch/tree/v1.7.1/third_party/miniz-2.0.8
   version: 2.0.8
@@ -75,7 +75,7 @@ third_party_packages:
     - https://github.com/onnx/onnx.git
   version: 553df2
 - name: pybind11
-  license:
+  license: BSD-3-Clause
   url:
     - https://github.com/seemethere/pybind11.git
   version: a1cb7c2
