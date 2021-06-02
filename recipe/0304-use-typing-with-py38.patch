@@ -1,16 +1,93 @@
+diff --git a/requirements.txt b/requirements.txt
+index 759baf3984..780aa8b1dc 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -4,5 +4,5 @@ pyyaml
+ requests
+ setuptools
+ six
+-typing_extensions
++typing_extensions; python_version<"3.8"
+ dataclasses; python_version<"3.7"
+diff --git a/setup.py b/setup.py
+index dcfcb7ee4e..7a47d6c095 100644
+--- a/setup.py
++++ b/setup.py
+@@ -353,7 +353,7 @@ def build_deps():
+ 
+ # the list of runtime dependencies required by this built package
+ install_requires = [
+-    'typing_extensions',
++    'typing_extensions; python_version < "3.8"',
+     'dataclasses; python_version < "3.7"'
+ ]
+ 
+diff --git a/tools/codegen/dest/register_dispatch_key.py b/tools/codegen/dest/register_dispatch_key.py
+index 6ab7f58843..d30f9eab92 100644
+--- a/tools/codegen/dest/register_dispatch_key.py
++++ b/tools/codegen/dest/register_dispatch_key.py
+@@ -1,6 +1,10 @@
++import sys
+ from typing import List, Optional, Union
+ import itertools
+-from typing_extensions import Literal
++if sys.version_info[:2] > (3, 7):
++    from typing import Literal
++else:
++    from typing_extensions import Literal
+ from dataclasses import dataclass
+ 
+ from tools.codegen.context import *
 diff --git a/tools/codegen/gen.py b/tools/codegen/gen.py
-index 4b8e59d..82f0acf 100644
+index 4b8e59d2b2..adc1a5c6a0 100644
 --- a/tools/codegen/gen.py
 +++ b/tools/codegen/gen.py
 @@ -1,6 +1,10 @@
  import os
++import sys
  from typing import List, Dict, Optional, Tuple, Set, Callable, Any, Union, Sequence
 -from typing_extensions import Literal
-+import sys
 +if sys.version_info[:2] > (3, 7):
-+    from typing import Literal 
++    from typing import Literal
 +else:
 +    from typing_extensions import Literal
  import yaml
  from collections import OrderedDict, defaultdict
  import argparse
+diff --git a/torch/distributed/pipeline/sync/checkpoint.py b/torch/distributed/pipeline/sync/checkpoint.py
+index 3f92407931..ec65a2bfd8 100644
+--- a/torch/distributed/pipeline/sync/checkpoint.py
++++ b/torch/distributed/pipeline/sync/checkpoint.py
+@@ -24,6 +24,7 @@ and :class:`Checkpoint` to delay only :class:`Checkpoint` until the gradient is
+ copied entirely.
+ 
+ """
++import sys
+ from collections import deque
+ from contextlib import contextmanager
+ import threading
+@@ -58,6 +59,9 @@ RNGStates = Tuple[Tensor, Optional[Tensor]]  # (cpu_rng_state, gpu_rng_state)
+ 
+ 
+ if TYPE_CHECKING:
++  if sys.version_info[:2] > (3, 7):
++    from typing import Protocol
++  else:
+     from typing_extensions import Protocol
+ else:
+     Protocol = object
+diff --git a/torch/nn/modules/lazy.py b/torch/nn/modules/lazy.py
+index dbb4eb6c36..ae4731764b 100644
+--- a/torch/nn/modules/lazy.py
++++ b/torch/nn/modules/lazy.py
+@@ -1,5 +1,9 @@
+ import itertools
+-from typing_extensions import Protocol
++import sys
++if sys.version_info[:2] > (3, 7):
++    from typing import Protocol
++else:
++    from typing_extensions import Protocol
+ import warnings
+ 
+ import torch

@@ -42,7 +42,6 @@ requirements:
     - pyyaml {{ pyyaml }}
     - cffi {{ cffi }}
     - protobuf {{ protobuf }}
-    - onnx {{ onnx }}
     - future {{ future }}
     - openblas-devel {{ openblas }}
     - numactl {{ numactl }}
@@ -64,7 +63,6 @@ requirements:
     - cffi {{ cffi }}
     - protobuf {{ protobuf }}
     - tabulate {{ tabulate }}
-    - onnx {{ onnx }}
     - future {{ future }}
     - pillow {{ pillow }}
     - typing_extensions {{ typing_extensions }}
