@@ -49,7 +49,7 @@ requirements:
     - lmdb {{ lmdb }}
     - leveldb {{ leveldb }}
     - libgfortran-ng {{ libgfortran }}
-    - typing_extensions {{ typing_extensions }}  #[py<38]
+    - typing_extensions {{ typing_extensions }}
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
@@ -67,7 +67,7 @@ requirements:
     - onnx {{ onnx }}
     - future {{ future }}
     - pillow {{ pillow }}
-    - typing_extensions {{ typing_extensions }}  #[py<38]
+    - typing_extensions {{ typing_extensions }}
     - click {{ click }}
     - networkx {{ networkx }}
     - scipy {{ scipy }}
