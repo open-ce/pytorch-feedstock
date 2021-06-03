@@ -1,8 +1,8 @@
 diff --git a/cmake/Dependencies.cmake b/cmake/Dependencies.cmake
-index 06464e7..c8834c9 100644
+index 06464e7..b2d7091 100644
 --- a/cmake/Dependencies.cmake
 +++ b/cmake/Dependencies.cmake
-@@ -1816,16 +1816,17 @@ if(USE_KINETO)
+@@ -1816,16 +1816,18 @@ if(USE_KINETO)
    message(STATUS "  KINETO_LIBRARY_TYPE = ${KINETO_LIBRARY_TYPE}")
    message(STATUS "  CUDA_SOURCE_DIR = ${CUDA_SOURCE_DIR}")
  
@@ -22,6 +22,7 @@ index 06464e7..c8834c9 100644
 +      set(CUDA_cupti_LIBRARY "${CUDA_SOURCE_DIR}/extras/CUPTI/lib64/libcupti_static.a")
 +    elseif(EXISTS ${CUDA_SOURCE_DIR}/lib64/libcupti_static.a)
 +      set(CUDA_cupti_LIBRARY "${CUDA_SOURCE_DIR}/lib64/libcupti_static.a")
++    endif()
    endif()
  
    if(EXISTS ${CUDA_SOURCE_DIR}/extras/CUPTI/include)
