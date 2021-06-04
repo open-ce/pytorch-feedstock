@@ -92,9 +92,7 @@ then
   # Enable GPU-related libraries
   export USE_CUDA=1
   export USE_CUDNN=1
-  
   export USE_CUPTI_SO=1
-  export LDFLAGS="${LDFLAGS} -Wl,-rpath-link,${CUDA_HOME}/lib64"
 
   export TORCH_CUDA_ARCH_LIST="3.7;6.0;7.0;7.5"
   if [[ $CUDA_VERSION == '11' ]]; then
