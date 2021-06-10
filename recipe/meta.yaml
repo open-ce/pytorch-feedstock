@@ -25,7 +25,9 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - libgcc-ng
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
     - {{ compiler('fortran') }}
     - git >={{ git }}
     - patch
@@ -33,6 +35,9 @@ requirements:
   host:
     - make
     - cmake {{ cmake }}
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
     - python {{ python }}
     - numpy {{ numpy }}
     - dataclasses {{ dataclasses }}          # [py36]
@@ -86,7 +91,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 17
+  number: 18
 {% if build_type == 'cpu' %}
   string: h{{ PKG_HASH }}_{{ build_type }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 {% else %}
