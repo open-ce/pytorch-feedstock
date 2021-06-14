@@ -101,6 +101,9 @@ build:
   string: h{{ PKG_HASH }}_{{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 {% endif %}
   detect_binary_files_with_prefix: False
+  ignore_run_exports:
+    - libgcc-ng
+    - libstdcxx-ng
   script_env:
     - CUDA_HOME
 
