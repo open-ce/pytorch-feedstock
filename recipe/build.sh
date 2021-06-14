@@ -107,7 +107,7 @@ then
   find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
   export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 
-  if [[ $PY_VER < 3.8 ]]
+  if [[ $PY_VER < 3.9 ]]
   then
     export USE_TENSORRT=1
     apply_trt_patches
