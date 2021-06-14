@@ -79,6 +79,9 @@ requirements:
     - pyyaml {{ pyyaml }}
     - libgfortran-ng              # versioning handled by run_exports
     - _pytorch_select {{ pytorch_select_version }}
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
 {% if build_type == 'cuda' %}
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
