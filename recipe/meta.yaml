@@ -10,10 +10,10 @@ source:
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
     - 0100-set-cmake_minimum_required-to-3.14.patch
-    - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64 and py<38]
+    - 0102-pytorch-tensorrt-Fix-for-GLIBC_2.14.patch # [x86_64 and py<39]
     - 0103-eigen-quiet-build-warning-for-missing-return.patch
-    - 0104-onnx-tensorrt-TRT7.patch                  # [py<38]
-    - 0105-workaround-for-compile-issue-with-glibc-memcpy-GLIBC.patch   #[x86_64 and py==38 and build_type=='cuda' and cudatoolkit=='11.0']
+    - 0104-onnx-tensorrt-TRT7.patch                  # [py<39]
+    - 0105-workaround-for-compile-issue-with-glibc-memcpy-GLIBC.patch   #[x86_64 and py==39 and build_type=='cuda' and cudatoolkit=='11.0']
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
     - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
 
