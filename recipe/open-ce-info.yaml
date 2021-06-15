@@ -73,7 +73,7 @@ third_party_packages:
   license: Apache License
   url:
     - https://github.com/onnx/onnx.git
-  version: 553df2
+  version: 553df22
 - name: pybind11
   license: BSD-3-Clause
   url:
