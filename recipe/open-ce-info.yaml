@@ -3,7 +3,7 @@ third_party_packages:
   license: BSD-3-Clause
   url:
     - https://github.com/NVlabs/cub.git
-  version: d106ddb9
+  version: d106ddb
 - name: googletest
   license: BSD-3-Clause
   url:
@@ -79,3 +79,8 @@ third_party_packages:
   url:
     - https://github.com/seemethere/pybind11.git
   version: a1cb7c2
+- name: tensorpipe
+  license: BSD-3-Clause
+  url:
+    - https://github.com/pytorch/tensorpipe.git
+  version: 95ff931
