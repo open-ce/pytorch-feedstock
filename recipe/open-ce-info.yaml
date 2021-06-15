@@ -27,7 +27,7 @@ third_party_packages:
 - name: cpuinfo
   license: BSD-2-Clause
   url:
-    - https://github.com/Maratyszcza/cpuinfo.git
+    - https://github.com/pytorch/cpuinfo.git
   version: 63b2545
 - name: foxi
   license: MIT
@@ -54,11 +54,6 @@ third_party_packages:
   url:
     - https://github.com/google/benchmark.git
   version: 505be96
-- name: cpuinfo
-  license: BSD-2-Clause
-  url:
-    - https://github.com/pytorch/cpuinfo.git
-  version: 63b2545
 - name: fmt
   license: MIT
   url:
