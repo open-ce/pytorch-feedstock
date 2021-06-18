@@ -27,7 +27,9 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - libgcc-ng
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
     - {{ compiler('fortran') }}
     - git >={{ git }}
     - patch
@@ -35,6 +37,9 @@ requirements:
   host:
     - make
     - cmake {{ cmake }}
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
     - python {{ python }}
     - numpy {{ numpy }}
     - dataclasses {{ dataclasses }}          # [py36]
@@ -75,6 +80,9 @@ requirements:
     - pyyaml {{ pyyaml }}
     - libgfortran-ng              # versioning handled by run_exports
     - _pytorch_select {{ pytorch_select_version }}
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
 {% if build_type == 'cuda' %}
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
@@ -94,6 +102,9 @@ build:
   string: h{{ PKG_HASH }}_{{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 {% endif %}
   detect_binary_files_with_prefix: False
+  ignore_run_exports:
+    - libgcc-ng
+    - libstdcxx-ng
   script_env:
     - CUDA_HOME
 
