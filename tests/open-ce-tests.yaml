@@ -7,12 +7,9 @@ tests:
         git apply ${FEEDSTOCK_DIR}/recipe/0305-fix-test_constants_with_final.patch
         git apply ${FEEDSTOCK_DIR}/recipe/0306-skip-test_clamp.patch
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba=0.52
+        conda install -y pytest mock hypothesis psutil numba typing_extensions
 {% if python=='3.6' %}
         conda install -y dataclasses
-{% endif %}
-{% if python<'3.8' %}
-        conda install -y typing_extensions
 {% endif %}
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
