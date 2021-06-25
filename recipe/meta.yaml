@@ -59,7 +59,8 @@ requirements:
     - nccl {{ nccl }}
     - magma {{ magma }}
     - libmemcpy_wrapper                      #[x86_64 and cudatoolkit=='11.0']
-    - tensorrt {{ tensorrt }}                #[py<38]
+    # uncomment these once tensorrt updates are ready.
+    # - tensorrt {{ tensorrt }}                #[py<38]
 {% endif %}
 
   run:
@@ -88,7 +89,8 @@ requirements:
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
     - libmemcpy_wrapper                          #[x86_64 and cudatoolkit=='11.0']
-    - tensorrt {{ tensorrt }}                    #[py<38]
+    # uncomment these once tensorrt updates are ready
+    # - tensorrt {{ tensorrt }}                    #[py<38]
 {% endif %}
 
   run_constrained:
