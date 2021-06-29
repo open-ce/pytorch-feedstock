@@ -2,61 +2,80 @@ third_party_packages:
 - name: cub
   license: BSD-3-Clause
   url:
-    - https://github.com/NVlabs/cub/archive/1.7.3.zip
-  version: 1.7.3
+    - https://github.com/NVlabs/cub.git
+  version: d106ddb
 - name: googletest
   license: BSD-3-Clause
   url:
-    - https://github.com/google/googletest/archive/release-1.8.0.tar.gz
-  version: 1.8.0
-- name: cub
-  license: BSD-3-Clause
-  url:
-    - https://github.com/NVlabs/cub/archive/1.8.0.zip
-  version: 1.8.0
+    - https://github.com/google/googletest.git
+  version: 2fe3bd9
 - name: eigen
   license: MPL 2.0
   url:
     - https://github.com/eigenteam/eigen-git-mirror.git
-  version: 3.3.0
+  version: d41dc4d
 - name: sleef
   license: BSL (Boost)
   url:
-    - https://github.com/shibatch/sleef/archive/3.4.1.tar.gz
-  version: 3.4.1
+    - https://github.com/shibatch/sleef.git
+  version: 7f523de
 - name: onnx-tensorrt
   license: MIT
   url:
     - https://github.com/onnx/onnx-tensorrt.git
-  version: v5.0
-- name: pytorch-examples
-  license: BSD-3-Clause
-  url:
-    - https://github.com/pytorch/examples.git
-  version: "0634306"
+  version: c153211
 - name: cpuinfo
   license: BSD-2-Clause
   url:
-    - https://github.com/Maratyszcza/cpuinfo.git
-  version: 89fe169
+    - https://github.com/pytorch/cpuinfo.git
+  version: 63b2545
 - name: foxi
   license: MIT
   url:
     - https://github.com/houseroad/foxi.git
-  version: 8f74bc4
+  version: 4aba696
 - name: FXdiv
   license: MIT
   url:
     - https://github.com/Maratyszcza/FXdiv.git
-  version: b742d11
+  version: b408327
 - name: gloo
   license: BSD-3-Clause
   url:
     - https://github.com/facebookincubator/gloo.git
-  version: ca528e3
+  version: 3dc0328
 - name: FP16
   license: MIT
   url:
     - https://github.com/Maratyszcza/FP16.git
-  version: febbb1c
-
+  version: 4dfe081
+- name: benchmark
+  license: Apache License
+  url:
+    - https://github.com/google/benchmark.git
+  version: 505be96
+- name: fmt
+  license: MIT
+  url:
+    - https://github.com/fmtlib/fmt.git
+  version: cd4af11
+- name: miniz
+  license: MIT
+  url:
+    - https://github.com/pytorch/pytorch/tree/v1.7.1/third_party/miniz-2.0.8
+  version: 2.0.8
+- name: onnx
+  license: Apache License
+  url:
+    - https://github.com/onnx/onnx.git
+  version: 553df22
+- name: pybind11
+  license: BSD-3-Clause
+  url:
+    - https://github.com/seemethere/pybind11.git
+  version: a1cb7c2
+- name: tensorpipe
+  license: BSD-3-Clause
+  url:
+    - https://github.com/pytorch/tensorpipe.git
+  version: 95ff931
