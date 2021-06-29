@@ -71,6 +71,7 @@ requirements:
     - tabulate {{ tabulate }}
     - future {{ future }}
     - pillow {{ pillow }}
+    - dataclasses {{ dataclasses }}          # [py36]
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
     - networkx {{ networkx }}
