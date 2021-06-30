@@ -109,9 +109,8 @@ then
 
   if [[ $PY_VER < 3.9 ]]
   then
-     #enable these once TensorRT updates are ready
-     export USE_TENSORRT=0
-#    apply_trt_patches
+    export USE_TENSORRT=1
+    apply_trt_patches
   else
     export USE_TENSORRT=0
   fi
