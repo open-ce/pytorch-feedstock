@@ -1,0 +1,13 @@
+diff --git a/caffe2/CMakeLists.txt b/caffe2/CMakeLists.txt
+index 7bef849..43de13d 100644
+--- a/caffe2/CMakeLists.txt
++++ b/caffe2/CMakeLists.txt
+@@ -1459,7 +1459,7 @@ if(BUILD_TEST)
+         if(NOT MSVC)
+           add_executable(${test_name}_${CPU_CAPABILITY} "${test_src}" ../aten/src/ATen/native/quantized/affine_quantizer_base.cpp)
+           # TODO: Get rid of c10 dependency (which is only needed for the implementation of AT_ERROR)
+-          target_link_libraries(${test_name}_${CPU_CAPABILITY} c10 sleef gtest_main)
++          target_link_libraries(${test_name}_${CPU_CAPABILITY} c10 sleef gtest_main rt)
+           if(USE_FBGEMM)
+             target_link_libraries(${test_name}_${CPU_CAPABILITY} fbgemm)
+           endif()

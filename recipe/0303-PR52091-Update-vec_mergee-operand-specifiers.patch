@@ -1,0 +1,40 @@
+From 9fdbe47b0161cc2c5bd12978800f03bb1bc15174 Mon Sep 17 00:00:00 2001
+From: David Clissold <cliss@us.ibm.com>
+Date: Wed, 10 Feb 2021 14:12:16 -0600
+Subject: [PATCH] Update vec_mergee operand specifiers (_vecb); patch needed to
+ work with g++V7
+
+---
+ aten/src/ATen/cpu/vec256/vsx/vec256_complex_float_vsx.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/aten/src/ATen/cpu/vec256/vsx/vec256_complex_float_vsx.h b/aten/src/ATen/cpu/vec256/vsx/vec256_complex_float_vsx.h
+index cb9b4c90fbe0..751cba0ae51a 100644
+--- a/aten/src/ATen/cpu/vec256/vsx/vec256_complex_float_vsx.h
++++ b/aten/src/ATen/cpu/vec256/vsx/vec256_complex_float_vsx.h
+@@ -328,12 +328,12 @@ class Vec256<ComplexFlt> {
+ 
+   Vec256<ComplexFlt> el_mergee() const {
+     // as mergee phased in , we can use vec_perm with mask
+-    return {vec_mergee(_vec0, _vec0), vec_mergee(_vec1, _vec1)};
++    return {vec_mergee(_vecb0, _vecb0), vec_mergee(_vecb1, _vecb1)};
+   }
+ 
+   Vec256<ComplexFlt> el_mergeo() const {
+     // as mergeo phased in , we can use vec_perm with mask
+-    return {vec_mergeo(_vec0, _vec0), vec_mergeo(_vec1, _vec1)};
++    return {vec_mergeo(_vecb0, _vecb0), vec_mergeo(_vecb1, _vecb1)};
+   }
+ 
+   Vec256<ComplexFlt> el_madd(
+@@ -349,8 +349,8 @@ class Vec256<ComplexFlt> {
+       Vec256<ComplexFlt>& second) {
+     // as mergee phased in , we can use vec_perm with mask
+     return {
+-        vec_mergee(first._vec0, second._vec0),
+-        vec_mergee(first._vec1, second._vec1)};
++        vec_mergee(first._vecb0, second._vecb0),
++        vec_mergee(first._vecb1, second._vecb1)};
+   }
+ 
+   Vec256<ComplexFlt> angle_() const {

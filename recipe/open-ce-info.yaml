@@ -18,7 +18,7 @@ third_party_packages:
   license: BSL (Boost)
   url:
     - https://github.com/shibatch/sleef.git
-  version: 7f523de
+  version: e0a003e
 - name: onnx-tensorrt
   license: MIT
   url:
@@ -28,12 +28,12 @@ third_party_packages:
   license: BSD-2-Clause
   url:
     - https://github.com/pytorch/cpuinfo.git
-  version: 63b2545
+  version: 5916273
 - name: foxi
   license: MIT
   url:
     - https://github.com/houseroad/foxi.git
-  version: 4aba696
+  version: 6a4e19a
 - name: FXdiv
   license: MIT
   url:
@@ -73,9 +73,14 @@ third_party_packages:
   license: BSD-3-Clause
   url:
     - https://github.com/seemethere/pybind11.git
-  version: a1cb7c2
+  version: 8e5d3d2
 - name: tensorpipe
   license: BSD-3-Clause
   url:
     - https://github.com/pytorch/tensorpipe.git
-  version: 95ff931
+  version: 369e855
+- name: kineto
+  license: BSD-3-Clause
+  url:
+    - https://github.com/pytorch/kineto.git
+  version: ce98f8b
