@@ -59,9 +59,13 @@ export BUILD_CUSTOM_PROTOBUF=OFF
 export PYTORCH_BUILD_VERSION=${PKG_VERSION}
 export PYTORCH_BUILD_NUMBER=0
 
+ARCH=`uname -p`
+if [[ "${ARCH}" == 'ppc64le' ]]; then
+  USE_KINETO=0
+fi
+
 function apply_trt_patches() {
   # update onnx-tensorrt submodule
-  ARCH=`uname -p`
   cd third_party/onnx-tensorrt
   if [[ $cudatoolkit == '11.0' ]]; then
       git checkout eb559b6cdd1ec2169d64c0112fab9b564d8d503b   #corresponds to TRT 7.2
@@ -93,9 +97,6 @@ then
   export USE_CUDA=1
   export USE_CUDNN=1
   
-  export USE_CUPTI_SO=1
-  export LDFLAGS="${LDFLAGS} -Wl,-rpath-link,${CUDA_HOME}/lib64"
-
   export TORCH_CUDA_ARCH_LIST="3.7;6.0;7.0;7.5"
   if [[ $CUDA_VERSION == '11' ]]; then
      export TORCH_CUDA_ARCH_LIST="$TORCH_CUDA_ARCH_LIST;8.0"
