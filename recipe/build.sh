@@ -50,7 +50,8 @@ export USE_PYTORCH_QNNPACK=0
 export TH_BINARY_BUILD=1
 export USE_LMDB=1
 export USE_LEVELDB=1
-export USE_OPENMP=1
+export USE_OPENMP=0
+export USE_TBB=1
 export USE_NINJA=0
 export USE_MPI=0
 
