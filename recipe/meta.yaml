@@ -21,7 +21,7 @@ source:
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
     - 0303-PR52091-Update-vec_mergee-operand-specifiers.patch
-    - 0306-package-tbb-headers.patch
+    - 0307-package-tbb-headers.patch
 
 requirements:
   build:
