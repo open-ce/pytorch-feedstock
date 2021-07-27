@@ -109,18 +109,19 @@ then
   find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
   export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 
-  if [[ $PY_VER < 3.9 ]]
-  then
-    export USE_TENSORRT=1
-    apply_trt_patches
-  else
-    export USE_TENSORRT=0
-  fi
+  # Temporarily disable TensorRT
+  #if [[ $PY_VER < 3.9 ]]
+  #then
+  #  export USE_TENSORRT=1
+  #  apply_trt_patches
+  #else
+  export USE_TENSORRT=0
+  #fi
 fi
 
-# use v1.6.0 for onnx submodule
+# use v1.7.0 for onnx submodule
 cd third_party/onnx
-git checkout 553df22c67bee5f0fe6599cff60f1afc6748c635
+git checkout 0c070abb0c40fec649f81a73a75b0098662ec486
 cd ../..
 
 # install
