@@ -4,8 +4,10 @@ tests:
         conda install -y git
         git clone -b v$(python -c "import torch; print(torch.__version__)") https://github.com/pytorch/pytorch
         cd pytorch
+        git apply ${FEEDSTOCK_DIR}/recipe/0306-skip-test_clamp.patch
+        git apply ${FEEDSTOCK_DIR}/recipe/0308-skip-test_qtopk.patch
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba typing_extensions
+        conda install -y pytest mock hypothesis psutil numba=0.52 typing_extensions
 {% if python=='3.6' %}
         conda install -y dataclasses
 {% endif %}

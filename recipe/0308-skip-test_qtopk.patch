@@ -1,0 +1,12 @@
+diff --git a/test/quantization/test_quantized_op.py b/test/quantization/test_quantized_op.py
+index ea8bdd135b..3089177618 100644
+--- a/test/quantization/test_quantized_op.py
++++ b/test/quantization/test_quantized_op.py
+@@ -1574,6 +1574,7 @@ class TestQuantizedOps(TestCase):
+            dim=st.integers(1, 4),
+            largest=st.booleans(),
+            sorted=st.booleans())
++    @unittest.skip("temporarily disable")
+     def test_qtopk(self, X, k, dim, largest, sorted):
+         X, (scale, zero_point, torch_type) = X
+         qX = torch.quantize_per_tensor(torch.from_numpy(X), scale, zero_point, torch_type)
