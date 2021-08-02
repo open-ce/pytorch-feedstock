@@ -85,7 +85,7 @@ requirements:
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
-    - libmemcpy_wrapper                          #[x86_64 and cudatoolkit=='11.0']
+    - libmemcpy_wrapper                          #[x86_64 and (cudatoolkit=='11.0' or cudatoolkit=='11.2')]
    #- tensorrt {{ tensorrt }}                    #[py<38]
 {% endif %}
 
