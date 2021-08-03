@@ -50,8 +50,6 @@ export USE_PYTORCH_QNNPACK=0
 export TH_BINARY_BUILD=1
 export USE_LMDB=1
 export USE_LEVELDB=1
-export USE_OPENMP=0
-export USE_TBB=1
 export USE_NINJA=0
 export USE_MPI=0
 
@@ -91,12 +89,16 @@ then
   export USE_CUDA=0
   export USE_CUDNN=0
   export USE_TENSORRT=0
+  export USE_OPENMP=0
+  export USE_TBB=1
 
 elif [[ $build_type == "cuda" ]]
 then
   # Enable GPU-related libraries
   export USE_CUDA=1
   export USE_CUDNN=1
+  export USE_OPENMP=1
+  export USE_TBB=0
   
   export TORCH_CUDA_ARCH_LIST="3.7;6.0;7.0;7.5"
   if [[ $CUDA_VERSION == '11' ]]; then
