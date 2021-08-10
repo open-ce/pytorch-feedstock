@@ -20,7 +20,7 @@ source:
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
     - 0303-PR47677-remove-references-to-typing-module.patch
-    - 0306-package-tbb-headers.patch
+    - 0306-package-tbb-headers.patch                 #[build_type=='cpu']
 
 requirements:
   build:
