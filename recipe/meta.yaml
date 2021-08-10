@@ -21,7 +21,7 @@ source:
     - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
     - 0303-PR52091-Update-vec_mergee-operand-specifiers.patch
-    - 0307-package-tbb-headers.patch
+    - 0307-package-tbb-headers.patch                 #[build_type=='cpu']
 
 requirements:
   build:
@@ -93,7 +93,7 @@ requirements:
     - tensorboard {{ tensorboard }}
 
 build:
-  number: 5
+  number: 6
 {% if build_type == 'cpu' %}
   string: h{{ PKG_HASH }}_{{ build_type }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 {% else %}
