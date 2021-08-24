@@ -59,9 +59,6 @@ export PYTORCH_BUILD_VERSION=${PKG_VERSION}
 export PYTORCH_BUILD_NUMBER=0
 
 ARCH=`uname -p`
-if [[ "${ARCH}" == 'ppc64le' ]]; then
-  USE_KINETO=0
-fi
 
 function apply_trt_patches() {
   # update onnx-tensorrt submodule
