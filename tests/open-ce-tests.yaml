@@ -7,7 +7,7 @@ tests:
         git apply ${FEEDSTOCK_DIR}/recipe/0306-skip-test_clamp.patch
         git apply ${FEEDSTOCK_DIR}/recipe/0308-skip-test_qtopk.patch
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba=0.52 typing_extensions psutil
+        conda install -y pytest mock hypothesis psutil numba=0.52 typing_extensions astunparse psutil
 {% if python=='3.6' %}
         conda install -y dataclasses
 {% endif %}
@@ -17,10 +17,10 @@ tests:
             ARCH="64"
         fi
         conda install gxx_linux-${ARCH}
-  - name: Run PyTorch test_c10d
+  - name: Run PyTorch test_c10d_common
     command: |
         cd pytorch
-        python test/distributed/test_c10d.py ComputeBucketAssignmentTest
+        python test/distributed/test_c10d_common.py ComputeBucketAssignmentTest
   - name: Run PyTorch test_cuda_primary_ctx
     command: |
         cd pytorch
@@ -64,11 +64,11 @@ tests:
   - name: Run PyTorch test_sparse
     command: |
         cd pytorch
-        python test/test_sparse.py TestCudaSparse.test_basic TestCudaUncoalescedSparse.test_basic TestSparse.test_basic TestUncoalescedSparse.test_basic
+        python test/test_sparse.py TestSparseCPU
   - name: Run PyTorch test_torch
     command: |
         cd pytorch
-        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_dlpack_conversion_cpu
+        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_dlpack_conversion_cpu_int8
   - name: Run PyTorch test_type_info
     command: |
         cd pytorch
@@ -76,7 +76,7 @@ tests:
   - name: Run PyTorch test_utils
     command: |
         cd pytorch
-        python test/test_utils.py TestCheckpoint.test_checkpoint TestCollectEnv.test_smoke TestDataLoader.test_random_seed
+        python test/test_utils.py TestCheckpoint.test_checkpoint TestCollectEnv.test_smoke TestDataLoaderUtils.test_random_seed
   - name: Run PyTorch test_namedtuple_return_api
     command: |
         cd pytorch
