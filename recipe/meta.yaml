@@ -25,9 +25,6 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    # Use pins to control cos6/cos7 match
-    - libgcc-ng  {{ libgcc }}
-    - libstdcxx-ng  {{ libstdcxx }}
     - {{ compiler('fortran') }}
     - git >={{ git }}
     - patch
@@ -35,9 +32,6 @@ requirements:
   host:
     - make
     - cmake {{ cmake }}
-    # Use pins to control cos6/cos7 match
-    - libgcc-ng  {{ libgcc }}
-    - libstdcxx-ng  {{ libstdcxx }}
     - python {{ python }}
     - numpy {{ numpy }}
     - dataclasses {{ dataclasses }}          # [py36]
