@@ -99,9 +99,6 @@ then
   
   ## Use centralized CUDA capability settings
   export TORCH_CUDA_ARCH_LIST="${cuda_levels}"
-  if [[ $CUDA_VERSION == '11' ]]; then
-     export TORCH_CUDA_ARCH_LIST="$TORCH_CUDA_ARCH_LIST;${cuda11_levels}"
-  fi
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
   # Create symlinks of cublas headers into CONDA_PREFIX
