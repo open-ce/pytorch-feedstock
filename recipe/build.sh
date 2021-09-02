@@ -98,7 +98,7 @@ then
   export USE_TBB=0
   
   ## Use centralized CUDA capability settings
-  export TORCH_CUDA_ARCH_LIST="${cuda_levels}"
+  export TORCH_CUDA_ARCH_LIST="${cuda_levels//,/;}"      #PyTorch expects ';' separated arch list
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
   # Create symlinks of cublas headers into CONDA_PREFIX
