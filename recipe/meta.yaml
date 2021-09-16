@@ -42,7 +42,6 @@ requirements:
     - numactl {{ numactl }}
     - lmdb {{ lmdb }}
     - leveldb {{ leveldb }}
-    - libgfortran-ng {{ libgfortran }}
     - typing_extensions {{ typing_extensions }}
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
