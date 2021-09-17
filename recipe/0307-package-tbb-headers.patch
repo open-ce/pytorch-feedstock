@@ -1,5 +1,5 @@
 diff --git a/cmake/Dependencies.cmake b/cmake/Dependencies.cmake
-index 06464e799a..065cd1550d 100644
+index 5d57b9ca78..b76e605695 100644
 --- a/cmake/Dependencies.cmake
 +++ b/cmake/Dependencies.cmake
 @@ -99,6 +99,12 @@ if(USE_TBB)
@@ -16,20 +16,20 @@ index 06464e799a..065cd1550d 100644
  
  # ---[ protobuf
 diff --git a/setup.py b/setup.py
-index dcfcb7ee4e..9a25ee0349 100644
+index 06b96e0b5d..e33bce5e0f 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -964,7 +964,7 @@ if __name__ == '__main__':
-                 'utils/benchmark/utils/*.cpp',
-                 'utils/benchmark/utils/valgrind_wrapper/*.cpp',
-                 'utils/benchmark/utils/valgrind_wrapper/*.h',
+@@ -1037,7 +1037,7 @@ if __name__ == '__main__':
+                 'utils/model_dump/skeleton.html',
+                 'utils/model_dump/code.js',
+                 'utils/model_dump/*.mjs',
 -            ],
 +            ] + (['include/tbb/*.h','include/tbb/combat/*.h','include/tbb/internal/*.h','include/tbb/machine/*.h'] if os.environ.get('USE_TBB') == '1' else []),
              'caffe2': [
                  'python/serialized_test/data/operator_test/*.zip',
              ],
 diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
-index f15d32b592..2bc8ee2f9a 100644
+index f2e61e27ac..a2d6778a96 100644
 --- a/torch/CMakeLists.txt
 +++ b/torch/CMakeLists.txt
 @@ -72,6 +72,10 @@ set(TORCH_PYTHON_INCLUDE_DIRECTORIES

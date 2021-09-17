@@ -59,9 +59,6 @@ export PYTORCH_BUILD_VERSION=${PKG_VERSION}
 export PYTORCH_BUILD_NUMBER=0
 
 ARCH=`uname -p`
-if [[ "${ARCH}" == 'ppc64le' ]]; then
-  USE_KINETO=0
-fi
 
 function apply_trt_patches() {
   # update onnx-tensorrt submodule
@@ -100,10 +97,8 @@ then
   export USE_OPENMP=1
   export USE_TBB=0
   
-  export TORCH_CUDA_ARCH_LIST="3.7;6.0;7.0;7.5"
-  if [[ $CUDA_VERSION == '11' ]]; then
-     export TORCH_CUDA_ARCH_LIST="$TORCH_CUDA_ARCH_LIST;8.0"
-  fi
+  ## Use centralized CUDA capability settings
+  export TORCH_CUDA_ARCH_LIST="${cuda_levels//,/;}"      #PyTorch expects ';' separated arch list
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
   # Create symlinks of cublas headers into CONDA_PREFIX
