@@ -1,25 +1,23 @@
 diff --git a/cmake/Dependencies.cmake b/cmake/Dependencies.cmake
-index 5d57b9ca78..b76e605695 100644
+index ca560288a4..44771e5756 100644
 --- a/cmake/Dependencies.cmake
 +++ b/cmake/Dependencies.cmake
-@@ -99,6 +99,12 @@ if(USE_TBB)
-   set_property(TARGET tbb tbb_def_files PROPERTY FOLDER "dependencies")
+@@ -110,6 +110,10 @@ if(USE_TBB)
+     set(TBB_INCLUDE_DIR "${TBB_ROOT_DIR}/include")
  
-   set(CMAKE_CXX_FLAGS ${OLD_CMAKE_CXX_FLAGS})
+     add_library(TBB::tbb ALIAS tbb)
 +
-+  set(tbb_INCLUDE_DIRS ${CMAKE_CURRENT_LIST_DIR}/../third_party/tbb/include)
-+  install(DIRECTORY ${tbb_INCLUDE_DIRS}
++    install(DIRECTORY ${TBB_INCLUDE_DIR}
 +            DESTINATION ${CMAKE_INSTALL_PREFIX}
 +            FILES_MATCHING PATTERN "*.h")
-+
+   endif()
  endif()
  
- # ---[ protobuf
 diff --git a/setup.py b/setup.py
-index 06b96e0b5d..e33bce5e0f 100644
+index 6d9ed53dc6..8cfc2d3547 100644
 --- a/setup.py
 +++ b/setup.py
-@@ -1037,7 +1037,7 @@ if __name__ == '__main__':
+@@ -1047,7 +1047,7 @@ if __name__ == '__main__':
                  'utils/model_dump/skeleton.html',
                  'utils/model_dump/code.js',
                  'utils/model_dump/*.mjs',
@@ -29,7 +27,7 @@ index 06b96e0b5d..e33bce5e0f 100644
                  'python/serialized_test/data/operator_test/*.zip',
              ],
 diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
-index f2e61e27ac..a2d6778a96 100644
+index 743a5d4421..28e9026bbe 100644
 --- a/torch/CMakeLists.txt
 +++ b/torch/CMakeLists.txt
 @@ -72,6 +72,10 @@ set(TORCH_PYTHON_INCLUDE_DIRECTORIES
@@ -37,7 +35,7 @@ index f2e61e27ac..a2d6778a96 100644
      ${pybind11_INCLUDE_DIRS}
  
 +if(USE_TBB)
-+    ${tbb_INCLUDE_DIRS}
++   ${TBB_INCLUDE_DIR}
 +endif()
 +
      ${TORCH_SRC_DIR}/csrc
