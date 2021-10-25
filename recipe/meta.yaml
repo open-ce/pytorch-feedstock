@@ -18,7 +18,8 @@ source:
     - 0301-PR66085-Remove-unused-dump-method-from-VSX-vec256-methods.patch
     - 0302-cpp-extension.patch
     - 0307-package-tbb-headers.patch                 #[build_type=='cpu']
-
+    # temporary patch to disable VSX code compilation.
+    - donotgenerate_vsx.patch
 requirements:
   build:
     - {{ compiler('c') }}
