@@ -1,4 +1,4 @@
-{% set version = "1.9.0" %}
+{% set version = "1.9.1" %}
 
 package:
   name: pytorch-base
@@ -15,7 +15,6 @@ source:
     - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
-#    - 0301-PR37865-Fix-compile-errors-related-to-disabling-xnnpack.patch
     - 0302-cpp-extension.patch
     - 0307-package-tbb-headers.patch                 #[build_type=='cpu']
 
