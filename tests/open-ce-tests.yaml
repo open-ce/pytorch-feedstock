@@ -17,6 +17,7 @@ tests:
             ARCH="64"
         fi
         conda install gxx_linux-${ARCH}
+        pip install expecttest
   - name: Run PyTorch test_c10d_common
     command: |
         cd pytorch
@@ -68,7 +69,7 @@ tests:
   - name: Run PyTorch test_torch
     command: |
         cd pytorch
-        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_dlpack_conversion_cpu_int8
+        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_dlpack_capsule_conversion_cpu_int8
   - name: Run PyTorch test_type_info
     command: |
         cd pytorch
