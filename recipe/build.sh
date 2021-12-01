@@ -117,9 +117,9 @@ then
   #fi
 fi
 
-# use v1.7.0 for onnx submodule
+# use v1.10.0 for onnx submodule
 cd third_party/onnx
-git checkout 0c070abb0c40fec649f81a73a75b0098662ec486
+git checkout 7c1e0b0391d06002789e56f8fe0c7bb9f4d1159b
 cd ../..
 
 # install
