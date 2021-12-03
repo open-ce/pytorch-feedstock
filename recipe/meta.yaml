@@ -1,4 +1,4 @@
-{% set version = "1.9.1" %}
+{% set version = "1.10.0" %}
 
 package:
   name: pytorch-base
@@ -10,13 +10,16 @@ source:
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
     - 0100-set-cmake_minimum_required-to-3.14.patch
-    - 0104-onnx-tensorrt-TRT7.patch                  # [py<39]
+#    - 0104-onnx-tensorrt-TRT7.patch                  # [py<39]
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
     - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0302-cpp-extension.patch
     - 0307-package-tbb-headers.patch                 #[build_type=='cpu']
+    - 0311-PR66085-Remove-unused-dump-method-from-VSX-vec256-methods.patch
+    - 0312-PR67331-Dummpy-VSX-bfloat16-implementation.patch
+    - 0313-add-missing-vsx-dispatch.patch
 
 requirements:
   build:

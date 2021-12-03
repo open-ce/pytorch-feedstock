@@ -52,6 +52,7 @@ export USE_LMDB=1
 export USE_LEVELDB=1
 export USE_NINJA=0
 export USE_MPI=0
+export USE_BREAKPAD=0
 
 export BUILD_CUSTOM_PROTOBUF=OFF
 
@@ -116,9 +117,9 @@ then
   #fi
 fi
 
-# use v1.7.0 for onnx submodule
+# use v1.10.2 for onnx submodule
 cd third_party/onnx
-git checkout 0c070abb0c40fec649f81a73a75b0098662ec486
+git checkout da889e6b95750350726d149bf447bf0cd1245964
 cd ../..
 
 # install
