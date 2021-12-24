@@ -34,7 +34,6 @@ requirements:
     - cmake {{ cmake }}
     - python {{ python }}
     - numpy {{ numpy }}
-    - dataclasses {{ dataclasses }}          # [py36]
     - setuptools {{ setuptools }}
     - pyyaml {{ pyyaml }}
     - cffi {{ cffi }}
@@ -60,7 +59,6 @@ requirements:
     - tabulate {{ tabulate }}
     - future {{ future }}
     - pillow {{ pillow }}
-    - dataclasses {{ dataclasses }}          # [py36]
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
     - networkx {{ networkx }}
