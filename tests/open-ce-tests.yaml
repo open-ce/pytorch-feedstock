@@ -8,9 +8,6 @@ tests:
         git apply ${FEEDSTOCK_DIR}/recipe/0308-skip-test_qtopk.patch
         rm -rf torch
         conda install -y pytest mock hypothesis psutil numba typing_extensions astunparse psutil
-{% if python=='3.6' %}
-        conda install -y dataclasses
-{% endif %}
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
         then
