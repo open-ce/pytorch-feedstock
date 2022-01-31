@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # *****************************************************************
-# (C) Copyright IBM Corp. 2019, 2021. All Rights Reserved.
+# (C) Copyright IBM Corp. 2019, 2022. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +15,15 @@
 # limitations under the License.
 # *****************************************************************
 set -ex
+
+if [[ $ppc_arch == "p10" ]]
+then
+  export PATH=/opt/rh/gcc-toolset-10/root/usr/bin/:$PATH
+  export CFLAGS="${CFLAGS} -mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+  export CXXFLAGS="${CXXFLAGS} -mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+  export DEBUG_CFLAGS="-mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+  export DEBUG_CXXFLAGS="-mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+fi
 
 SCRIPT_DIR=$RECIPE_DIR/../scripts
 

@@ -1,0 +1,13 @@
+diff --git a/cmake/Modules/FindVSX.cmake b/cmake/Modules/FindVSX.cmake
+index 304b3c90b5..f76395b57d 100644
+--- a/cmake/Modules/FindVSX.cmake
++++ b/cmake/Modules/FindVSX.cmake
+@@ -8,7 +8,7 @@ IF(CMAKE_SYSTEM_NAME MATCHES "Linux")
+       if(${platform} MATCHES "^power")
+         message("-- POWER Platform: ${platform}")
+         SET(POWER_COMP TRUE CACHE BOOL "power ")
+-        SET(CXX_VSX_FLAGS  "${CXX_VSX_FLAGS} -mcpu=${platform} -mtune=${platform}" )
++        SET(CXX_VSX_FLAGS  "${CXX_VSX_FLAGS} -mcpu=power8 -mtune=power10" )
+       endif()
+     endif()
+   endif()
