@@ -18,11 +18,16 @@ set -ex
 
 if [[ $ppc_arch == "p10" ]]
 then
-  export PATH=/opt/rh/gcc-toolset-10/root/usr/bin/:$PATH
-  export CFLAGS="${CFLAGS} -mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
-  export CXXFLAGS="${CXXFLAGS} -mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
-  export DEBUG_CFLAGS="-mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
-  export DEBUG_CXXFLAGS="-mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+  if [[ -z "${GCC_10_HOME}" ]];
+  then
+    echo "Please set GCC_10_HOME to the install path of gcc-toolset-10"
+    exit 1
+  else
+    export PATH=$GCC_10_HOME/bin/:$PATH
+    export CFLAGS="${CFLAGS} -mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+    export CXXFLAGS="${CXXFLAGS} -mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+    export DEBUG_CFLAGS="-mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
+    export DEBUG_CXXFLAGS="-mcpu=power8 -mtune=power10 -mpower8-fusion -mpower8-vector -ftree-vectorize"
 fi
 
 SCRIPT_DIR=$RECIPE_DIR/../scripts

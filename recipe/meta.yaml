@@ -90,7 +90,8 @@ build:
 {% endif %}
   detect_binary_files_with_prefix: False
   script_env:
-    - CUDA_HOME
+    - CUDA_HOME                                  #[build_type == 'cuda']
+    - GCC_10_HOME                                #[ppc_arch == 'p10']
 
 about:
   home: http://pytorch.org/
