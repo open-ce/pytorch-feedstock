@@ -93,6 +93,10 @@ build:
     - CUDA_HOME                                  #[build_type == 'cuda']
     - GCC_10_HOME                                #[ppc_arch == 'p10']
 
+test:
+  imports:
+    - torch
+
 about:
   home: http://pytorch.org/
   license: BSD 3-Clause
