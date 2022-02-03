@@ -1,4 +1,4 @@
-{% set version = "1.10.1" %}
+{% set version = "1.10.2" %}
 
 package:
   name: pytorch-base
@@ -58,7 +58,7 @@ requirements:
     - protobuf {{ protobuf }}
     - tabulate {{ tabulate }}
     - future {{ future }}
-    - pillow {{ pillow }}
+    - pillow
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
     - networkx {{ networkx }}
@@ -89,6 +89,13 @@ build:
   detect_binary_files_with_prefix: False
   script_env:
     - CUDA_HOME
+
+test:
+  imports:
+    - torch
+    - torch.cuda
+  commands:
+    - pip check
 
 about:
   home: http://pytorch.org/
