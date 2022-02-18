@@ -1,4 +1,4 @@
-{% set version = "1.10.1" %}
+{% set version = "1.10.2" %}
 
 package:
   name: pytorch-base
@@ -60,9 +60,11 @@ requirements:
     - protobuf {{ protobuf }}
     - tabulate {{ tabulate }}
     - future {{ future }}
-    - pillow {{ pillow }}
+    - pillow
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
+    # https://github.com/AnacondaRecipes/click-feedstock/issues/4
+    - importlib-metadata                     # [py<38]
     - networkx {{ networkx }}
     - scipy {{ scipy }}
     - numactl {{ numactl }}
@@ -96,6 +98,13 @@ build:
 test:
   imports:
     - torch
+
+test:
+  imports:
+    - torch
+    - torch.cuda
+  commands:
+    - pip check
 
 about:
   home: http://pytorch.org/
