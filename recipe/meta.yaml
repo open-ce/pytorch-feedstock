@@ -97,10 +97,6 @@ build:
 test:
   imports:
     - torch
-
-test:
-  imports:
-    - torch
     - torch.cuda
   commands:
     - pip check
