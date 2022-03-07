@@ -1,5 +1,5 @@
 # Recipe for metapackages to install CPU and GPU versions of PyTorch
-{% set version = "1.10.1" %}
+{% set version = "1.11.0" %}
 
 package:
   name: pytorch{{ '-cpu' if build_type == 'cpu' else '' }}
