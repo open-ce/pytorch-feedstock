@@ -1,5 +1,16 @@
+From 42ebba2e5a804aa4b4c17977877ba5ae64343230 Mon Sep 17 00:00:00 2001
+From: Deepali Chourasia <deepch23@in.ibm.com>
+Date: Mon, 7 Mar 2022 12:36:49 +0000
+Subject: [PATCH] set cmake minimum version to 3.14
+
+---
+ CMakeLists.txt               | 2 +-
+ tools/setup_helpers/cmake.py | 4 ++--
+ torch/CMakeLists.txt         | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0c11507838..fd36d6fe39 100644
+index e51760b5ae..4e415b2e7b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1,4 +1,4 @@
@@ -9,28 +20,23 @@ index 0c11507838..fd36d6fe39 100644
  #cmake_policy(SET CMP0023 NEW)
  
 diff --git a/tools/setup_helpers/cmake.py b/tools/setup_helpers/cmake.py
-index dd8f817aba..67aec06466 100644
+index ff175771fd..3f38e384b7 100644
 --- a/tools/setup_helpers/cmake.py
 +++ b/tools/setup_helpers/cmake.py
-@@ -120,13 +120,13 @@ class CMake:
-             return cmake_command
-         cmake3 = which('cmake3')
-         cmake = which('cmake')
--        if cmake3 is not None and CMake._get_version(cmake3) >= distutils.version.LooseVersion("3.10.0"):
-+        if cmake3 is not None and CMake._get_version(cmake3) >= distutils.version.LooseVersion("3.14.0"):
-             cmake_command = 'cmake3'
-             return cmake_command
--        elif cmake is not None and CMake._get_version(cmake) >= distutils.version.LooseVersion("3.10.0"):
-+        elif cmake is not None and CMake._get_version(cmake) >= distutils.version.LooseVersion("3.14.0"):
-             return cmake_command
-         else:
+@@ -121,9 +121,9 @@ class CMake:
+         cmake3_version = CMake._get_version(which('cmake3'))
+         cmake_version = CMake._get_version(which('cmake'))
+ 
+-        _cmake_min_version = LooseVersion("3.10.0")
++        _cmake_min_version = LooseVersion("3.14.0")
+         if all((ver is None or ver < _cmake_min_version for ver in [cmake_version, cmake3_version])):
 -            raise RuntimeError('no cmake or cmake3 with version >= 3.10.0 found')
 +            raise RuntimeError('no cmake or cmake3 with version >= 3.14.0 found')
  
-     @staticmethod
-     def _get_version(cmd: str) -> Any:
+         if cmake3_version is None:
+             cmake_command = 'cmake'
 diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
-index 743a5d4421..042b6f126f 100644
+index 94d9cbb33b..97d25b4b2e 100644
 --- a/torch/CMakeLists.txt
 +++ b/torch/CMakeLists.txt
 @@ -2,7 +2,7 @@
@@ -42,3 +48,6 @@ index 743a5d4421..042b6f126f 100644
    project(torch CXX C)
    find_package(torch REQUIRED)
    option(USE_CUDA "Use CUDA" ON)
+-- 
+2.32.0
+
