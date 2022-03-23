@@ -113,6 +113,8 @@ then
   export TORCH_CUDA_ARCH_LIST="${cuda_levels//,/;}"      #PyTorch expects ';' separated arch list
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
+  export CMAKE_CUDA_HOST_COMPILER=$CC
+
   # Create symlinks of cublas headers into CONDA_PREFIX
   mkdir -p $CONDA_PREFIX/include
   find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
