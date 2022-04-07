@@ -17,7 +17,6 @@ source:
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0302-cpp-extension.patch
-    - 0307-package-tbb-headers.patch                 #[build_type=='cpu']
     - 0311-PR66085-Remove-unused-dump-method-from-VSX-vec256-methods.patch
     - 0312-PR67331-Dummpy-VSX-bfloat16-implementation.patch
     - 0313-add-missing-vsx-dispatch.patch
