@@ -14,7 +14,7 @@ source:
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
     - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
     - 0108-change-mcpu-and-mtune.patch                #[ppc_arch == "p10"]
-    #temporarily skip compiling half-test.cpp
+    #skip compiling half-test.cpp
     - 0109-skip-half-test.patch                       #[ppc64le and ppc_arch == "p9"]
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
