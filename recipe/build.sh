@@ -24,6 +24,10 @@ then
     exit 1
   else
     export PATH=${GCC_10_HOME}/bin/:$PATH
+    # Removing Anaconda supplied libstdc++.so so that generated libs build against
+    # libstdc++.so present on the system provided by gcc-toolset-10
+    rm ${PREFIX}/lib/libstdc++.so*
+    rm ${BUILD_PREFIX}/lib/libstdc++.so*
   fi
 fi
 
