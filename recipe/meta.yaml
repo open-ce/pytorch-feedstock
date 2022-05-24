@@ -14,13 +14,15 @@ source:
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
     - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
     - 0108-change-mcpu-and-mtune.patch                #[ppc_arch == "p10"]
+    #skip compiling half-test.cpp
+    - 0109-skip-half-test.patch                       #[ppc64le and ppc_arch == "p9"]
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0302-cpp-extension.patch
-    - 0307-package-tbb-headers.patch                 #[build_type=='cpu']
     - 0311-PR66085-Remove-unused-dump-method-from-VSX-vec256-methods.patch
 #    - 0312-PR67331-Dummpy-VSX-bfloat16-implementation.patch
 #    - 0313-add-missing-vsx-dispatch.patch
+    - 0314-fix-nullpointer-error.patch
 
 requirements:
   build:
@@ -29,6 +31,7 @@ requirements:
     - {{ compiler('fortran') }}          #[ppc_arch != "p10"]
     - git >={{ git }}
     - patch
+    - zlib {{ zlib }}
 
   host:
     - make
@@ -45,6 +48,7 @@ requirements:
     - lmdb {{ lmdb }}
     - leveldb {{ leveldb }}
     - typing_extensions {{ typing_extensions }}
+    - zlib {{ zlib }}
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
@@ -85,14 +89,14 @@ requirements:
 build:
   number: 1
 {% if build_type == 'cpu' %}
-  string: h{{ PKG_HASH }}_{{ build_type }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
+  string: {{ build_type }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 {% else %}
-  string: h{{ PKG_HASH }}_{{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
+  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 {% endif %}
   detect_binary_files_with_prefix: False
   script_env:
     - CUDA_HOME                                  #[build_type == 'cuda']
-    - GCC_10_HOME                                #[ppc_arch == 'p10']
+    - GCC_11_HOME                                #[ppc_arch == 'p10']
 
 test:
   imports:

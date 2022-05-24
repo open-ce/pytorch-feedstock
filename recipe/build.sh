@@ -18,12 +18,12 @@ set -ex
 
 if [[ $ppc_arch == "p10" ]]
 then
-  if [[ -z "${GCC_10_HOME}" ]];
+  if [[ -z "${GCC_11_HOME}" ]];
   then
-    echo "Please set GCC_10_HOME to the install path of gcc-toolset-10"
+    echo "Please set GCC_11_HOME to the install path of gcc-toolset-11"
     exit 1
   else
-    export PATH=${GCC_10_HOME}/bin/:$PATH
+    export PATH=${GCC_11_HOME}/bin/:$PATH
   fi
 fi
 
@@ -64,6 +64,8 @@ export USE_LEVELDB=1
 export USE_NINJA=0
 export USE_MPI=0
 export USE_BREAKPAD=0
+export USE_OPENMP=1
+export USE_TBB=0
 
 export BUILD_CUSTOM_PROTOBUF=OFF
 
@@ -98,16 +100,12 @@ then
   export USE_CUDA=0
   export USE_CUDNN=0
   export USE_TENSORRT=0
-  export USE_OPENMP=0
-  export USE_TBB=1
 
 elif [[ $build_type == "cuda" ]]
 then
   # Enable GPU-related libraries
   export USE_CUDA=1
   export USE_CUDNN=1
-  export USE_OPENMP=1
-  export USE_TBB=0
   
   ## Use centralized CUDA capability settings
   export TORCH_CUDA_ARCH_LIST="${cuda_levels//,/;}"      #PyTorch expects ';' separated arch list
