@@ -16,17 +16,6 @@
 # *****************************************************************
 set -ex
 
-if [[ $ppc_arch == "p10" ]]
-then
-  if [[ -z "${GCC_11_HOME}" ]];
-  then
-    echo "Please set GCC_11_HOME to the install path of gcc-toolset-11"
-    exit 1
-  else
-    export PATH=${GCC_11_HOME}/bin/:$PATH
-  fi
-fi
-
 SCRIPT_DIR=$RECIPE_DIR/../scripts
 
 CUDA_VERSION="${cudatoolkit%.*}"
@@ -45,6 +34,10 @@ export LDFLAGS="${LDFLAGS} -Wl,-rpath-link,${PREFIX}/lib"
 
 # needed so cmake can find the conda version of librt.so and other libraries and headers
 export CMAKE_PREFIX_PATH="${BUILD_PREFIX}/${HOST}/sysroot/usr/;${PREFIX}"
+
+#fplt is needed to fix compiler errors with GCC11
+export CXXFLAGS="${CXXFLAGS} -fplt"
+export CFLAGS="${CFLAGS} -fplt"
 
 # select OpenBLAS for BLAS
 export BLAS=OpenBLAS
