@@ -1,0 +1,33 @@
+# Recipe for metapackages to install CPU and GPU versions of PyTorch
+{% set version = "1.10.2" %}
+
+package:
+  name: pytorch{{ '-cpu' if build_type == 'cpu' else '' }}
+  version: {{ version }}
+
+build:
+  number: 1
+  string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
+  string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
+
+requirements:
+  run:
+    - pytorch-base     {{ version }}
+    - _pytorch_select  {{ pytorch_select_version }}
+    - torchtext-base   {{ torchtext }}
+    - torchvision-base {{ torchvision }}
+    - python           {{ python }}
+    - cudatoolkit      {{ cudatoolkit }} #[build_type == 'cuda']
+
+about:
+  home: http://pytorch.org/
+  license: BSD 3-Clause
+  license_family: BSD
+  summary: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} PyTorch variant
+  description: Meta-package to install {{ 'GPU-enabled' if build_type == 'cuda' else 'CPU-only' }} PyTorch variant
+  dev_url: https://github.com/pytorch/pytorch
+  doc_url: https://pytorch.org/docs/stable/index.html
+
+extra:
+  recipe-maintainers:
+    - open-ce/open-ce-dev-team
