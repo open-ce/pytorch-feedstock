@@ -27,7 +27,7 @@ then
   fi
 fi
 
-SCRIPT_DIR=$RECIPE_DIR/../scripts
+SCRIPT_DIR=$RECIPE_DIR/../../scripts
 
 CUDA_VERSION="${cudatoolkit%.*}"
 
