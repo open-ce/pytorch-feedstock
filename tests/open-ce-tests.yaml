@@ -13,7 +13,7 @@ tests:
           git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0308-skip-test_qtopk.patch
         fi
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba typing_extensions astunparse psutil
+        conda install -y pytest mock hypothesis psutil numba typing_extensions astunparse psutil setuptools=58
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
         then
