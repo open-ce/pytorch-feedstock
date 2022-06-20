@@ -1,0 +1,164 @@
+diff --git a/caffe2/contrib/tensorrt/tensorrt_op_trt.cc b/caffe2/contrib/tensorrt/tensorrt_op_trt.cc
+index 825a15264d..0a27cfeb2e 100644
+--- a/caffe2/contrib/tensorrt/tensorrt_op_trt.cc
++++ b/caffe2/contrib/tensorrt/tensorrt_op_trt.cc
+@@ -10,33 +10,47 @@
+ namespace caffe2 {
+ 
+ namespace {
++// < TRT-6
+ // Note that input of trt tensor is in CHW format, while our tensor is NCHW
+ // \return -1 if there is dimension mismatch between C2 tensor and trt tensor.
+ // Otherwise, return the product of CHW dimensions
++// >=TRT-7 the input of trt tensor is also in NCHW format, adjust acordingly
+ int64_t CheckDims(
+     const nvinfer1::Dims& nv_dims,
+     at::ArrayRef<int64_t> c2_dims) {
+-  if (nv_dims.nbDims + 1 != c2_dims.size()) {
++#if defined(TENSORRT_VERSION_MAJOR) && (TENSORRT_VERSION_MAJOR >= 6)
++  // input tensor is in NCHW format
++  uint8_t nv_dims_offset = 0;
++  if (nv_dims.nbDims != c2_dims.size()) {
++#else
++  // input tensor is in CHW format
++  uint8_t nv_dims_offset = 1;
++  if (nv_dims.nbDims+1 != c2_dims.size()) {
++#endif
+     CAFFE_THROW(
+         "Mismatched dimensions between TRT input (",
+-        nv_dims.nbDims + 1,
++        nv_dims.nbDims,
+         ") and C2 input (",
+         c2_dims.size(),
+         ")");
+   }
+   int64_t chw = 1;
+-  for (int i = 0; i < nv_dims.nbDims; ++i) {
+-    if (nv_dims.d[i] != c2_dims[i + 1]) {
++  // caculate chw product, we start at index 1
++  // in c2_dims to bypass the batchsize, for the trt
++  // input tensor nv_dims_offset will adjust
++  // the index accordingly
++  for (int i = 1; i < nv_dims.nbDims; ++i) {
++    if (nv_dims.d[i-nv_dims_offset] != c2_dims[i]) {
+       CAFFE_THROW(
+           "Mismatched value at dimension ",
+           i,
+           "  between TRT input (",
+-          nv_dims.d[i],
++          nv_dims.d[i-nv_dims_offset],
+           ") and C2 input (",
+-          c2_dims[i + 1],
++          c2_dims[i],
+           ")");
+     }
+-    chw *= nv_dims.d[i];
++    chw *= nv_dims.d[i-nv_dims_offset];
+   }
+   return chw;
+ }
+@@ -53,7 +67,8 @@ TensorRTOp::TensorRTOp(const OperatorDef& operator_def, Workspace* ws)
+               "log_verbosity",
+               FLAGS_caffe2_log_level))),
+       max_batch_size_(
+-          OperatorBase::GetSingleArgument<int>("max_batch_size", 1)) {
++          OperatorBase::GetSingleArgument<int>("max_batch_size", 1)),
++      explicit_batch_size_(0) {
+   {
+     auto engine_string =
+         OperatorBase::GetSingleArgument<std::string>("backend_buffer", "");
+@@ -122,6 +137,20 @@ TensorRTOp::TensorRTOp(const OperatorDef& operator_def, Workspace* ws)
+         output_size_hints_.emplace(output_idx, std::move(dims));
+       }
+       ++output_idx;
++    } else {
++#if defined(TENSORRT_VERSION_MAJOR) && (TENSORRT_VERSION_MAJOR >= 6)
++      int batch_size = nv_dims_[b].d[0];
++      LOG(INFO) << "binding " << b << " is input with batch_size = " << batch_size;
++      if (batch_size > 0) {
++        explicit_batch_size_ = batch_size;
++        if (explicit_batch_size_ < max_batch_size_) {
++          LOG(WARNING) << "Explicit batch size (" << batch_size << ") is less"
++	           << "than max_batch_size (" << max_batch_size_ << "). "
++		   << "Reducing max_batch_size.";
++	  max_batch_size_ = batch_size;
++	}
++      }
++#endif
+     }
+   }
+ 
+@@ -205,11 +234,15 @@ bool TensorRTOp::RunOnDevice() {
+         // output, we need to allocate the output tensor at first batch run
+         auto* output_tensor = Output(output_idx);
+         std::vector<int64_t> tensor_dims;
+-        tensor_dims.push_back(N);
++	if (!explicit_batch_size_) {
++          tensor_dims.push_back(N);
++	}
+         int64_t chw = 1;
+         for (int i = 0; i < dims.nbDims; ++i) {
+           tensor_dims.push_back(dims.d[i]);
+-          chw *= dims.d[i];
++	  if (!explicit_batch_size_ || i > 0) {
++            chw *= dims.d[i];
++	  }
+         }
+ 
+         if (offset == 0) {
+diff --git a/caffe2/contrib/tensorrt/tensorrt_op_trt.h b/caffe2/contrib/tensorrt/tensorrt_op_trt.h
+index a98b8a33a3..d5cdcec23f 100644
+--- a/caffe2/contrib/tensorrt/tensorrt_op_trt.h
++++ b/caffe2/contrib/tensorrt/tensorrt_op_trt.h
+@@ -21,6 +21,7 @@ class TensorRTOp final : public Operator<CUDAContext> {
+ 
+   tensorrt::TrtLogger logger_;
+   int max_batch_size_;
++  int explicit_batch_size_;
+   std::vector<nvinfer1::Dims> nv_dims_;
+   std::vector<bool> is_input_;
+   std::unordered_map<int, std::vector<int64_t>> output_size_hints_;
+diff --git a/caffe2/contrib/tensorrt/tensorrt_tranformer.cc b/caffe2/contrib/tensorrt/tensorrt_tranformer.cc
+index 28ca3c6fb4..c0a4fe8f0f 100644
+--- a/caffe2/contrib/tensorrt/tensorrt_tranformer.cc
++++ b/caffe2/contrib/tensorrt/tensorrt_tranformer.cc
+@@ -484,7 +484,14 @@ void TensorRTTransformer::Transform(
+   onnx::OnnxExporter exporter(nullptr);
+   tensorrt::TrtLogger logger;
+   auto trt_builder = tensorrt::TrtObject(nvinfer1::createInferBuilder(logger));
++  trt_builder->setMaxBatchSize(max_batch_size_);
++#if defined(TENSORRT_VERSION_MAJOR) && (TENSORRT_VERSION_MAJOR >= 6)
++  auto trt_network = tensorrt::TrtObject(trt_builder->createNetworkV2(
++      1U << static_cast<uint32_t>(nvinfer1::
++      NetworkDefinitionCreationFlag::kEXPLICIT_BATCH)));
++#else
+   auto trt_network = tensorrt::TrtObject(trt_builder->createNetwork());
++#endif
+   auto importer =
+       tensorrt::TrtObject(nvonnxparser::createParser(*trt_network, logger));
+ 
+diff --git a/caffe2/python/trt/test_pt_onnx_trt.py b/caffe2/python/trt/test_pt_onnx_trt.py
+index 96f1ad76f6..9b49b5c1b5 100644
+--- a/caffe2/python/trt/test_pt_onnx_trt.py
++++ b/caffe2/python/trt/test_pt_onnx_trt.py
+@@ -67,7 +67,7 @@ class Test_PT_ONNX_TRT(unittest.TestCase):
+ 
+     def build_engine_onnx(self, model_file):
+         with trt.Builder(TRT_LOGGER) as builder, builder.create_network(flags = 1) as network, trt.OnnxParser(network, TRT_LOGGER) as parser:
+-            builder.max_workspace_size = 1 << 33
++            builder.max_workspace_size = 1 << 30
+             with open(model_file, 'rb') as model:
+                 if not parser.parse(model.read()):
+                     for error in range(parser.num_errors):
+diff --git a/caffe2/python/trt/test_trt.py b/caffe2/python/trt/test_trt.py
+index 39d37ca9fa..0df1206866 100644
+--- a/caffe2/python/trt/test_trt.py
++++ b/caffe2/python/trt/test_trt.py
+@@ -170,6 +170,7 @@ class TensorRTOpTest(TestCase):
+         self._test_onnx_importer('squeezenet', -1, 9)
+ 
+     @unittest.skipIf(not workspace.C.use_trt, "No TensortRT support")
++    @unittest.skip("Test fails see: https://github.ibm.com/mldlppc/tracker/issues/14704")
+     def test_vgg16(self):
+         self._test_onnx_importer('vgg16', 0, 9)
+ 

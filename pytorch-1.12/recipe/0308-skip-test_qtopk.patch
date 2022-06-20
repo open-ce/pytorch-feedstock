@@ -1,0 +1,20 @@
+diff --git a/test/quantization/core/test_quantized_op.py b/test/quantization/core/test_quantized_op.py
+index 6275174d8e..ed01df272c 100644
+--- a/test/quantization/core/test_quantized_op.py
++++ b/test/quantization/core/test_quantized_op.py
+@@ -1596,6 +1596,7 @@ class TestQuantizedOps(TestCase):
+                                  msg=error_message.format(name + '.zero_point', scale,
+                                  X_hat.q_zero_point()))
+ 
++    @unittest.skip("temporarily disable")
+     @given(X=hu.tensor(shapes=hu.array_shapes(min_dims=3, max_dims=4,
+                                               min_side=1, max_side=10),
+                        qparams=hu.qparams()),
+@@ -3309,6 +3310,7 @@ class TestQuantizedEmbeddingOps(TestCase):
+         np.testing.assert_allclose(w_unpacked.numpy(), w_unpacked_c2.numpy(), atol=1e-6, rtol=1e-6)
+ 
+     """ Tests the correctness of the embedding_bag_8bit pack/unpack op against C2 """
++    @unittest.skip("temporarily disable")
+     @given(num_embeddings=st.integers(10, 100),
+            embedding_dim=st.integers(5, 50).filter(lambda x: x % 4 == 0),
+            num_batches=st.integers(1, 5),
