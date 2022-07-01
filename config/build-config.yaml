@@ -1,9 +1,20 @@
 recipes:
+{% if build_type == 'cuda' and cudatoolkit == '11.2' %}
   - name : pytorch-select
-    path : select_recipe
+    path : pytorch-1.10/select_recipe
 
   - name : pytorch-base
-    path : recipe
+    path : pytorch-1.10/recipe
 
   - name : pytorch-meta
-    path : meta_recipe
+    path : pytorch-1.10/meta_recipe
+{% else %}
+  - name : pytorch-select
+    path : pytorch-1.12/select_recipe
+
+  - name : pytorch-base
+    path : pytorch-1.12/recipe
+
+  - name : pytorch-meta
+    path : pytorch-1.12/meta_recipe
+{% endif %}

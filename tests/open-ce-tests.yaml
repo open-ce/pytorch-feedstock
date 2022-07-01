@@ -2,12 +2,18 @@ tests:
   - name: Setup PyTorch Tests
     command: |
         conda install -y git
-        git clone -b v$(python -c "import torch; print(torch.__version__)") https://github.com/pytorch/pytorch
+        TORCH_VERSION=$(python -c "import torch; print(torch.__version__)")
+        git clone -b v$TORCH_VERSION https://github.com/pytorch/pytorch
+        TORCH_VERSION=$(python -c "import torch; print(torch.__version__)")
         cd pytorch
-        git apply ${FEEDSTOCK_DIR}/recipe/0306-skip-test_clamp.patch
-        git apply ${FEEDSTOCK_DIR}/recipe/0308-skip-test_qtopk.patch
+        if [[ $TORCH_VERSION == '1.12.0' ]]; then
+           git apply ${FEEDSTOCK_DIR}/pytorch-1.11/recipe/0304-skip-test_model_dropout-if-no-fbgemm.patch
+        else
+          git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0306-skip-test_clamp.patch
+          git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0308-skip-test_qtopk.patch
+        fi
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil numba typing_extensions astunparse psutil
+        conda install -y pytest mock hypothesis psutil numba typing_extensions astunparse psutil setuptools=58
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
         then
