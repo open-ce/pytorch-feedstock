@@ -24,6 +24,8 @@ then
     exit 1
   else
     export PATH=${GCC_11_HOME}/bin/:$PATH
+    rm ${PREFIX}/lib/libstdc++.so*
+    rm ${BUILD_PREFIX}/lib/libstdc++.so*
   fi
 fi
 
