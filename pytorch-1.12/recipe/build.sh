@@ -118,6 +118,7 @@ then
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
   export CMAKE_CUDA_HOST_COMPILER=$CC
+  export CMAKE_CUDA_COMPILER=${CUDA_HOME}/bin/nvcc
 
   # Create symlinks of cublas headers into CONDA_PREFIX
   mkdir -p $CONDA_PREFIX/include

@@ -115,6 +115,7 @@ then
   mkdir -p $CONDA_PREFIX/include
   find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
   export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
+  export CMAKE_CUDA_COMPILER=${CUDA_HOME}/bin/nvcc
 
   # Temporarily disable TensorRT
   #if [[ $PY_VER < 3.9 ]]
