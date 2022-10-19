@@ -1,17 +1,17 @@
+From c0f93e966850395365764fa4ae8947f1183daf88 Mon Sep 17 00:00:00 2001
+From: Deepali Chourasia <deepch23@in.ibm.com>
+Date: Wed, 12 Oct 2022 12:43:59 +0000
+Subject: [PATCH] cpp-extension
+
+---
+ torch/utils/cpp_extension.py | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
+
 diff --git a/torch/utils/cpp_extension.py b/torch/utils/cpp_extension.py
-index aed4fd5004..9ebaf18652 100644
+index 9ab43e5ccd..bdadb63983 100644
 --- a/torch/utils/cpp_extension.py
 +++ b/torch/utils/cpp_extension.py
-@@ -53,7 +53,7 @@ CUDA_GCC_VERSIONS = {
-     '11.1': (MINIMUM_GCC_VERSION, (10, 0, 0)),
-     '11.2': (MINIMUM_GCC_VERSION, (10, 0, 0)),
-     '11.3': (MINIMUM_GCC_VERSION, (10, 0, 0)),
--    '11.4': ((6, 0, 0), (10, 0, 0))
-+    '11.4': ((6, 0, 0), (11, 2, 0))
- }
- 
- CUDA_CLANG_VERSIONS = {
-@@ -465,12 +465,17 @@ class BuildExtension(build_ext, object):
+@@ -533,12 +533,17 @@ class BuildExtension(build_ext, object):
          else:
              original_compile = self.compiler._compile
  
@@ -31,7 +31,7 @@ index aed4fd5004..9ebaf18652 100644
              if not any(flag.startswith(cpp_flag_prefix) for flag in cflags):
                  cflags.append(cpp_flag)
  
-@@ -511,11 +516,13 @@ class BuildExtension(build_ext, object):
+@@ -579,11 +584,13 @@ class BuildExtension(build_ext, object):
                          cflags = COMMON_HIPCC_FLAGS + cflags + _get_rocm_arch_flags(cflags)
                      else:
                          cflags = unix_cuda_flags(cflags)
@@ -46,7 +46,7 @@ index aed4fd5004..9ebaf18652 100644
  
                  original_compile(obj, src, ext, cc_args, cflags, pp_opts)
              finally:
-@@ -564,7 +571,7 @@ class BuildExtension(build_ext, object):
+@@ -632,7 +639,7 @@ class BuildExtension(build_ext, object):
                  post_cflags = list(extra_postargs)
              if IS_HIP_EXTENSION:
                  post_cflags = COMMON_HIP_FLAGS + post_cflags
@@ -55,7 +55,7 @@ index aed4fd5004..9ebaf18652 100644
  
              cuda_post_cflags = None
              cuda_cflags = None
-@@ -579,7 +586,7 @@ class BuildExtension(build_ext, object):
+@@ -647,7 +654,7 @@ class BuildExtension(build_ext, object):
                      cuda_post_cflags = COMMON_HIP_FLAGS + COMMON_HIPCC_FLAGS + cuda_post_cflags
                  else:
                      cuda_post_cflags = unix_cuda_flags(cuda_post_cflags)
@@ -64,7 +64,7 @@ index aed4fd5004..9ebaf18652 100644
                  cuda_cflags = [shlex.quote(f) for f in cuda_cflags]
                  cuda_post_cflags = [shlex.quote(f) for f in cuda_post_cflags]
  
-@@ -710,7 +717,7 @@ class BuildExtension(build_ext, object):
+@@ -783,7 +790,7 @@ class BuildExtension(build_ext, object):
                  post_cflags = extra_postargs['cxx']
              else:
                  post_cflags = list(extra_postargs)
@@ -73,3 +73,6 @@ index aed4fd5004..9ebaf18652 100644
  
              cuda_post_cflags = None
              cuda_cflags = None
+-- 
+2.34.1
+
