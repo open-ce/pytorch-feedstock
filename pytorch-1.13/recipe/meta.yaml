@@ -6,7 +6,7 @@ package:
 
 source:
   git_url: https://github.com/pytorch/pytorch.git
-  git_rev: v{{ version }}-rc3
+  git_rev: v{{ version }}
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
     - 0100-set-cmake_minimum_required-to-3.14.patch
