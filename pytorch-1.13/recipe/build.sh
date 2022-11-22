@@ -73,6 +73,7 @@ export USE_OPENMP=1
 export USE_TBB=0
 
 export BUILD_CUSTOM_PROTOBUF=OFF
+export BUILD_CAFFE2=1
 
 export PYTORCH_BUILD_VERSION=${PKG_VERSION}
 export PYTORCH_BUILD_NUMBER=0
@@ -117,6 +118,7 @@ then
   export TORCH_NVCC_FLAGS="-Xfatbin -compress-all"
 
   export CMAKE_CUDA_HOST_COMPILER=$CC
+  export CMAKE_CUDA_COMPILER=${CUDA_HOME}/bin/nvcc
 
   # Create symlinks of cublas headers into CONDA_PREFIX
   mkdir -p $CONDA_PREFIX/include
