@@ -6,7 +6,7 @@ tests:
         git clone -b v$TORCH_VERSION https://github.com/pytorch/pytorch
         TORCH_VERSION=$(python -c "import torch; print(torch.__version__)")
         cd pytorch
-        if [[ $TORCH_VERSION == '1.13.0' ]]; then
+        if [[ $TORCH_VERSION == '1.13.1' ]]; then
            git apply ${FEEDSTOCK_DIR}/pytorch-1.13/recipe/0304-skip-test_model_dropout-if-no-fbgemm.patch
         else
           git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0306-skip-test_clamp.patch
