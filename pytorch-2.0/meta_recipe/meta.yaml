@@ -1,5 +1,5 @@
 # Recipe for metapackages to install CPU and GPU versions of PyTorch
-{% set version = "1.13.1" %}
+{% set version = "2.0.0" %}
 
 package:
   name: pytorch{{ '-cpu' if build_type == 'cpu' else '' }}
@@ -17,6 +17,7 @@ requirements:
     - torchtext-base   {{ torchtext }}
     - torchvision-base {{ torchvision }}
     - python           {{ python }}
+    - torchdata
     - cudatoolkit      {{ cudatoolkit }} #[build_type == 'cuda']
 
 about:

@@ -1,4 +1,4 @@
-{% set version = "1.13.1" %}
+{% set version = "2.0.0" %}
 
 package:
   name: pytorch-base
@@ -6,17 +6,16 @@ package:
 
 source:
   git_url: https://github.com/pytorch/pytorch.git
-  git_rev: v{{ version }}
+  git_rev: v{{version}}
   patches:
     # 01xx - patch is specific to open-ce and will always be carried forward and not upstreamed
-    - 0100-set-cmake_minimum_required-to-3.14.patch
 #    - 0104-onnx-tensorrt-TRT7.patch                  # [py<39]
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
-    - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
-    - 0108-skip-half-test.patch         # [x86_64]
+#    - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
+#    - 0108-skip-half-test.patch         # [x86_64]
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
-    - 0302-cpp-extension.patch
+#    - 0302-cpp-extension.patch
 
 requirements:
   build:
@@ -36,7 +35,6 @@ requirements:
     - pyyaml {{ pyyaml }}
     - cffi {{ cffi }}
     - protobuf {{ protobuf }}
-    - future {{ future }}
     - openblas-devel {{ openblas }}
     - numactl {{ numactl }}
     - lmdb {{ lmdb }}
@@ -56,7 +54,6 @@ requirements:
     - cffi {{ cffi }}
     - protobuf {{ protobuf }}
     - tabulate {{ tabulate }}
-    - future {{ future }}
     - pillow
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
@@ -64,6 +61,9 @@ requirements:
     - importlib-metadata                     # [py<38]
     - networkx {{ networkx }}
     - scipy {{ scipy }}
+    - filelock
+    - sympy
+    - jinja2
     - numactl {{ numactl }}
     - lmdb                        # versioning handled by run_exports
     - leveldb                     # versioning handled by run_exports
