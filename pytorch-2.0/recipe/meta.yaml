@@ -15,6 +15,7 @@ source:
 #    - 0108-skip-half-test.patch         # [x86_64]
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
+    - 0309-fallback-to-cpu_kernel-with-VSX.patch     # [ppc64le]
 #    - 0302-cpp-extension.patch
 
 requirements:
