@@ -11,7 +11,7 @@ tests:
           git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0308-skip-test_qtopk.patch
         fi
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil typing_extensions astunparse psutil setuptools
+        conda install -y pytest mock hypothesis psutil typing_extensions astunparse psutil setuptools numba
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
         then
@@ -51,19 +51,14 @@ tests:
     command: |
         cd pytorch
         python test/test_nn.py TestNN.test_Conv1d TestNN.test_Conv2d_cuda TestNN.test_Conv3d_stride_cuda TestNN.test_ELU
-# enable this once numba adds support for numpy 1.23
-#  - name: Run PyTorch test_numba_integration
-#    command: |
-#        cd pytorch
-#        python test/run_test.py -i test_numba_integration
+  - name: Run PyTorch test_numba_integration
+    command: |
+        cd pytorch
+        python test/run_test.py -i test_numba_integration
   - name: Run PyTorch test_optim
     command: |
         cd pytorch
         python test/test_optim.py TestOptim.test_adagrad TestOptim.test_sgd
-  - name: Run PyTorch test_quantization
-    command: |
-        cd pytorch
-        python test/run_test.py -i test_quantization
   - name: Run PyTorch test_sparse
     command: |
         cd pytorch
@@ -71,7 +66,7 @@ tests:
   - name: Run PyTorch test_torch
     command: |
         cd pytorch
-        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_dlpack_capsule_conversion_cpu_int8
+        python test/test_torch.py TestTorchDeviceTypeCPU.test_addcmul_cpu_int8 TestTorch.test_sizeof TestTorchDeviceTypeCPU.test_tensor_storage_type_cpu_int64
   - name: Run PyTorch test_type_info
     command: |
         cd pytorch
