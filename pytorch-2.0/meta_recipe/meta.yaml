@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 build:
-  number: 1
+  number: 2
   string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
 
@@ -15,7 +15,7 @@ requirements:
     - pytorch-base     {{ version }}
     - _pytorch_select  {{ pytorch_select_version }}
     - torchtext-base   {{ torchtext }}
-    - torchvision-base {{ torchvision }}
+    - torchvision-base {{ torchvision }} #[not s390x]
     - python           {{ python }}
     - torchdata
     - cudatoolkit      {{ cudatoolkit }} #[build_type == 'cuda']
