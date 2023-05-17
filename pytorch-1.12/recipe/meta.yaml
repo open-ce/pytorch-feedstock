@@ -15,6 +15,7 @@ source:
     - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
+    - 0301-PR100149-Remove-vsx-suffix-in-sleef-calls.patch
     - 0302-cpp-extension.patch
 
 requirements:
