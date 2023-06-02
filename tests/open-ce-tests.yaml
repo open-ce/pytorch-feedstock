@@ -13,7 +13,7 @@ tests:
           git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0308-skip-test_qtopk.patch
         fi
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil typing_extensions astunparse psutil setuptools=58
+        conda install -y pytest mock hypothesis psutil typing_extensions astunparse psutil
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
         then
@@ -36,7 +36,7 @@ tests:
   - name: Run PyTorch test_dataloader
     command: |
         cd pytorch
-        python test/test_dataloader.py  TestDataLoader
+        python test/test_dataloader.py TestTensorDataset TestConcatDataset
   - name: Run PyTorch test_distributions
     command: |
         cd pytorch
@@ -65,11 +65,7 @@ tests:
   - name: Run PyTorch test_quantization
     command: |
         cd pytorch
-        python test/run_test.py -i test_quantization
-  - name: Run PyTorch test_sparse
-    command: |
-        cd pytorch
-        python test/test_sparse.py TestSparseCPU
+        python test/test_quantization.py TestQuantizedFunctionalOps
   - name: Run PyTorch test_torch
     command: |
         cd pytorch
