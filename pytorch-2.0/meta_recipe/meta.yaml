@@ -1,12 +1,12 @@
 # Recipe for metapackages to install CPU and GPU versions of PyTorch
-{% set version = "2.0.0" %}
+{% set version = "2.0.1" %}
 
 package:
   name: pytorch{{ '-cpu' if build_type == 'cpu' else '' }}
   version: {{ version }}
 
 build:
-  number: 2
+  number: 1
   string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}   #[build_type == 'cpu']
   string: {{ build_type }}{{ cudatoolkit | replace(".*", "") }}_py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }} #[build_type == 'cuda']
 
