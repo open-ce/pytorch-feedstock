@@ -27,6 +27,8 @@ then
     rm ${PREFIX}/lib/libstdc++.so*
     rm ${BUILD_PREFIX}/lib/libstdc++.so*
   fi
+  export CXXFLAGS="${CXXFLAGS} -mcpu=${cpu_opt_arch} -mtune=${cpu_opt_tune}"
+  export CFLAGS="${CFLAGS} -mcpu=${cpu_opt_arch} -mtune=${cpu_opt_tune}"
 fi
 
 SCRIPT_DIR=$RECIPE_DIR/../../scripts
