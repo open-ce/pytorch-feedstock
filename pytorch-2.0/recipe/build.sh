@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # *****************************************************************
-# (C) Copyright IBM Corp. 2019, 2022. All Rights Reserved.
+# (C) Copyright IBM Corp. 2019, 2023. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@ then
     rm ${PREFIX}/lib/libstdc++.so*
     rm ${BUILD_PREFIX}/lib/libstdc++.so*
   fi
+  export CXXFLAGS="${CXXFLAGS} -mcpu=${cpu_opt_arch} -mtune=${cpu_opt_tune}"
+  export CFLAGS="${CFLAGS} -mcpu=${cpu_opt_arch} -mtune=${cpu_opt_tune}"
 fi
 
 SCRIPT_DIR=$RECIPE_DIR/../../scripts
@@ -124,6 +126,11 @@ then
   mkdir -p $CONDA_PREFIX/include
   find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
   export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
+
+  # Create symlinks for livnvJitLink lib for cuda 12.2
+  if [[ $cudatoolkit == '12.2' ]]; then
+    find /usr/local/cuda/targets/${ARCH}-linux/lib/libnvJitLink.* -exec ln -s "{}" "$PREFIX/lib/" ';'
+  fi
 
   # Temporarily disable TensorRT
   #if [[ $PY_VER < 3.9 ]]
