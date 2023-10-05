@@ -1,0 +1,76 @@
+From 27930badba724ed476888d322c32856fd14ec848 Mon Sep 17 00:00:00 2001
+From: ArchanaShinde1 <archana.shinde2504@gmail.com>
+Date: Thu, 5 Oct 2023 12:20:34 +0000
+Subject: [PATCH] set-cmake minimum required to 3.14
+
+---
+ CMakeLists.txt               |  2 +-
+ tools/setup_helpers/cmake.py | 10 +++++-----
+ torch/CMakeLists.txt         |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0c11507838f..fd36d6fe390 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
++cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+ #cmake_policy(SET CMP0022 NEW)
+ #cmake_policy(SET CMP0023 NEW)
+ 
+diff --git a/tools/setup_helpers/cmake.py b/tools/setup_helpers/cmake.py
+index ed0df72e898..8d1e67ba82c 100644
+--- a/tools/setup_helpers/cmake.py
++++ b/tools/setup_helpers/cmake.py
+@@ -8,7 +8,7 @@ import re
+ from subprocess import check_call, check_output, CalledProcessError
+ import sys
+ import sysconfig
+-from setuptools import distutils  # type: ignore[import]
++from distutils.version import LooseVersion
+ from typing import IO, Any, Dict, List, Optional, Union, cast
+ 
+ from . import which
+@@ -120,13 +120,13 @@ class CMake:
+             return cmake_command
+         cmake3 = which('cmake3')
+         cmake = which('cmake')
+-        if cmake3 is not None and CMake._get_version(cmake3) >= distutils.version.LooseVersion("3.10.0"):
++        if cmake3 is not None and CMake._get_version(cmake3) >= LooseVersion("3.14.0"):
+             cmake_command = 'cmake3'
+             return cmake_command
+-        elif cmake is not None and CMake._get_version(cmake) >= distutils.version.LooseVersion("3.10.0"):
++        elif cmake is not None and CMake._get_version(cmake) >= LooseVersion("3.14.0"):
+             return cmake_command
+         else:
+-            raise RuntimeError('no cmake or cmake3 with version >= 3.10.0 found')
++            raise RuntimeError('no cmake or cmake3 with version >= 3.14.0 found')
+ 
+     @staticmethod
+     def _get_version(cmd: str) -> Any:
+@@ -134,7 +134,7 @@ class CMake:
+ 
+         for line in check_output([cmd, '--version']).decode('utf-8').split('\n'):
+             if 'version' in line:
+-                return distutils.version.LooseVersion(line.strip().split(' ')[2])
++                return LooseVersion(line.strip().split(' ')[2])
+         raise RuntimeError('no version found')
+ 
+     def run(self, args: List[str], env: Dict[str, str]) -> None:
+diff --git a/torch/CMakeLists.txt b/torch/CMakeLists.txt
+index 38baee4799b..bf7188a08cd 100644
+--- a/torch/CMakeLists.txt
++++ b/torch/CMakeLists.txt
+@@ -2,7 +2,7 @@
+ # Now it only builds the Torch python bindings.
+ 
+ if(NOT CAFFE2_CMAKE_BUILDING_WITH_MAIN_REPO)
+-  cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
++  cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+   project(torch CXX C)
+   find_package(torch REQUIRED)
+   option(USE_CUDA "Use CUDA" ON)
+-- 
+2.40.1
+
