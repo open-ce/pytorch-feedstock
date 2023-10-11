@@ -10,11 +10,11 @@ recipes:
     path : pytorch-1.10/meta_recipe
 {% else %}
   - name : pytorch-select
-    path : pytorch-2.0/select_recipe
+    path : pytorch-2.1/select_recipe
 
   - name : pytorch-base
-    path : pytorch-2.0/recipe
+    path : pytorch-2.1/recipe
 
   - name : pytorch-meta
-    path : pytorch-2.0/meta_recipe
+    path : pytorch-2.1/meta_recipe
 {% endif %}

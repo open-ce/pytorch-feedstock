@@ -1,4 +1,4 @@
-{% set version = "2.0.1" %}
+{% set version = "2.1.0" %}
 
 package:
   name: pytorch-base
@@ -17,7 +17,7 @@ source:
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0309-fallback-to-cpu_kernel-with-VSX.patch     # [ppc64le]
 #    - 0302-cpp-extension.patch
-    - 0310-PR100149.patch                #[ppc_arch == "p10"]
+#    - 0310-PR100149.patch                #[ppc_arch == "p10"]
     - 0311-PR104956.patch                # [ppc64le]
 
 requirements:
@@ -44,6 +44,7 @@ requirements:
     - leveldb {{ leveldb }}
     - typing_extensions {{ typing_extensions }}
     - zlib {{ zlib }}
+    - fsspec {{ fsspec }}
 {% if build_type == 'cuda' %}
     - cudnn {{ cudnn }}
     - nccl {{ nccl }}
@@ -73,6 +74,7 @@ requirements:
     - pyyaml {{ pyyaml }}
     - libgfortran-ng              # versioning handled by run_exports
     - _pytorch_select {{ pytorch_select_version }}
+    - fsspec {{ fsspec }}
 {% if build_type == 'cuda' %}
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
