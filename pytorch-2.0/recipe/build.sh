@@ -129,7 +129,7 @@ then
 
   # Create symlinks for livnvJitLink lib for cuda 12.2
   if [[ $cudatoolkit == '12.2' ]]; then
-    find /usr/local/cuda/targets/${ARCH}-linux/lib/libnvJitLink.* -exec ln -s "{}" "$PREFIX/lib/" ';'
+    find ${CUDA_HOME}/targets/${ARCH}-linux/lib/libnvJitLink.* -exec ln -s "{}" "$PREFIX/lib/" ';'
   fi
 
   # Temporarily disable TensorRT
