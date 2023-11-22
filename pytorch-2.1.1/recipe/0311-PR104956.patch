@@ -1,0 +1,28 @@
+From 6c31b122aec904601932fd7fe0f732d494d22521 Mon Sep 17 00:00:00 2001
+From: Aman-Surkar <aman_surkar@persistent.com>
+Date: Tue, 10 Oct 2023 14:39:17 +0000
+Subject: [PATCH] PR104956
+
+---
+ torch/_inductor/codecache.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/torch/_inductor/codecache.py b/torch/_inductor/codecache.py
+index 926e45f756e..c5b35f90c66 100644
+--- a/torch/_inductor/codecache.py
++++ b/torch/_inductor/codecache.py
+@@ -977,9 +977,9 @@ def optimization_flags() -> str:
+         base_flags += " -Xclang"
+     else:
+         if platform.machine() == "ppc64le":
+-            base_flags += " -mcpu=native"
++            base_flags += " -mcpu=native -fopenmp"
+         else:
+-            base_flags += " -march=native"
++            base_flags += " -march=native -fopenmp"
+ 
+     # Internal cannot find libgomp.so
+     if not config.is_fbcode():
+-- 
+2.40.1
+
