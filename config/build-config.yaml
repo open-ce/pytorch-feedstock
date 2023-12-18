@@ -1,9 +1,9 @@
 recipes:
   - name : pytorch-select
-    path : pytorch-2.1.1/select_recipe
+    path : pytorch-2.1.2/select_recipe
 
   - name : pytorch-base
-    path : pytorch-2.1.1/recipe
+    path : pytorch-2.1.2/recipe
 
   - name : pytorch-meta
-    path : pytorch-2.1.1/meta_recipe
+    path : pytorch-2.1.2/meta_recipe
