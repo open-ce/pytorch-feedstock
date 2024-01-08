@@ -1,4 +1,4 @@
-{% set version = "2.0.1" %}
+{% set version = "2.1.2" %}
 
 package:
   name: pytorch-base
@@ -73,6 +73,7 @@ requirements:
     - pyyaml {{ pyyaml }}
     - libgfortran-ng              # versioning handled by run_exports
     - _pytorch_select {{ pytorch_select_version }}
+    - fsspec {{ fsspec }}
 {% if build_type == 'cuda' %}
     - cudatoolkit {{ cudatoolkit }}
     - cudnn {{ cudnn }}
