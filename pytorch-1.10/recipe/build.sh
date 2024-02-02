@@ -18,12 +18,12 @@ set -ex
 
 if [[ $ppc_arch == "p10" ]]
 then
-  if [[ -z "${GCC_11_HOME}" ]];
+  if [[ -z "${GCC_HOME}" ]];
   then
-    echo "Please set GCC_11_HOME to the install path of gcc-toolset-11"
+    echo "Please set GCC_HOME to the install path of gcc-toolset-12"
     exit 1
   else
-    export PATH=${GCC_11_HOME}/bin/:$PATH
+    export PATH=${GCC_HOME}/bin/:$PATH
   fi
 fi
 
