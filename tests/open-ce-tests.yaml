@@ -34,7 +34,7 @@ tests:
   - name: Run PyTorch test_dataloader
     command: |
         cd pytorch
-        python test/test_dataloader.py  TestDataLoader
+        python -m pytest -v test/test_dataloader.py
   - name: Run PyTorch test_distributions
     command: |
         cd pytorch
