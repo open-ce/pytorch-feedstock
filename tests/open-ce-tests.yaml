@@ -17,7 +17,7 @@ tests:
         then
             ARCH="64"
         fi
-        conda install gxx_linux-${ARCH}
+        conda install -y gxx_linux-${ARCH}
         pip install expecttest
   - name: Run PyTorch test_c10d_common
     command: |
