@@ -61,7 +61,7 @@ requirements:
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
     # https://github.com/AnacondaRecipes/click-feedstock/issues/4
-    - importlib-metadata                     # [py<38]
+    - importlib_metadata 6.0.0                    # [py<38]
     - networkx {{ networkx }}
     - scipy {{ scipy }}
     - filelock
@@ -94,7 +94,7 @@ build:
   detect_binary_files_with_prefix: False
   script_env:
     - CUDA_HOME                                  #[build_type == 'cuda']
-    - GCC_11_HOME                                #[ppc_arch == 'p10']
+    - GCC_HOME                                #[ppc_arch == 'p10']
 
 test:
   imports:
