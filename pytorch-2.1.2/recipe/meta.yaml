@@ -61,7 +61,6 @@ requirements:
     - typing_extensions {{ typing_extensions }}
     - click {{ click }}
     # https://github.com/AnacondaRecipes/click-feedstock/issues/4
-    - importlib_metadata 6.0.0                    # [py<38]
     - networkx {{ networkx }}
     - scipy {{ scipy }}
     - filelock
