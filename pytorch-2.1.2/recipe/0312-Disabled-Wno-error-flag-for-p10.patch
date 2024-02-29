@@ -1,0 +1,24 @@
+From 9c4f25c562abde83f55781bc955cdf05954d4638 Mon Sep 17 00:00:00 2001
+From: Aman-Surkar <aman_surkar@persistent.com>
+Date: Wed, 28 Feb 2024 09:19:54 +0000
+Subject: [PATCH] Disabled-Wno-error-flag-for-p10
+
+---
+ test/cpp/api/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/test/cpp/api/CMakeLists.txt b/test/cpp/api/CMakeLists.txt
+index 54f526be350..a623a9241ce 100644
+--- a/test/cpp/api/CMakeLists.txt
++++ b/test/cpp/api/CMakeLists.txt
+@@ -83,6 +83,7 @@ if(NOT MSVC)
+   target_compile_options_if_supported(test_api "-Wno-maybe-uninitialized")
+   # gcc gives nonsensical warnings about variadic.h
+   target_compile_options_if_supported(test_api "-Wno-unused-but-set-parameter")
++  target_compile_options_if_supported(test_api "-Wno-error=nonnull")
+ endif()
+ 
+ if(INSTALL_TEST)
+-- 
+2.40.1
+
