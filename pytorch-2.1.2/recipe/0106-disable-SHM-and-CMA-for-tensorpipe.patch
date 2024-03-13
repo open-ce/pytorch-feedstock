@@ -1,5 +1,5 @@
 From c7ea717a127f8536548edf420e4c8291ae59652e Mon Sep 17 00:00:00 2001
-From: Aman-Surkar <aman_surkar@persistent.com>
+From: Aman Surkar <Aman.Surkar@ibm.com>
 Date: Wed, 22 Nov 2023 08:20:04 +0000
 Subject: [PATCH] 0106-disable-SHM-and-CMA-for-tensorpipe
 
