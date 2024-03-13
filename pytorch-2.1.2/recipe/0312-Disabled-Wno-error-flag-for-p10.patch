@@ -1,5 +1,5 @@
 From 9c4f25c562abde83f55781bc955cdf05954d4638 Mon Sep 17 00:00:00 2001
-From: Aman-Surkar <aman_surkar@persistent.com>
+From: Aman Surkar <Aman.Surkar@ibm.com>
 Date: Wed, 28 Feb 2024 09:19:54 +0000
 Subject: [PATCH] Disabled-Wno-error-flag-for-p10
 
