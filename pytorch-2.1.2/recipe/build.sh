@@ -127,11 +127,6 @@ then
   find /usr/include -name cublas*.h -exec ln -s "{}" "$CONDA_PREFIX/include/" ';'
   export CXXFLAGS="${CXXFLAGS} -I${PREFIX}/include -I${CUDA_HOME}/include -I${CONDA_PREFIX}/include"
 
-  # Create symlinks for livnvJitLink lib for cuda 12.2
-  if [[ $cudatoolkit == '12.2' ]]; then
-    find ${CUDA_HOME}/targets/${ARCH}-linux/lib/libnvJitLink.* -exec ln -s "{}" "$PREFIX/lib/" ';'
-  fi
-
   # Temporarily disable TensorRT
   #if [[ $PY_VER < 3.9 ]]
   #then
