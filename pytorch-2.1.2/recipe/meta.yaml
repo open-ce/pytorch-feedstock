@@ -12,7 +12,7 @@ source:
 #    - 0104-onnx-tensorrt-TRT7.patch                  # [py<39]
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
 #    - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
-#    - 0108-skip-half-test.patch         # [x86_64]
+    - 0108-skip-half-test.patch          # [ppc64le]
 
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0309-fallback-to-cpu_kernel-with-VSX.patch     # [ppc64le]
