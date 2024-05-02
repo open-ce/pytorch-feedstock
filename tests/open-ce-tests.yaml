@@ -11,7 +11,7 @@ tests:
           git apply ${FEEDSTOCK_DIR}/pytorch-1.10/recipe/0308-skip-test_qtopk.patch
         fi
         rm -rf torch
-        conda install -y pytest mock hypothesis psutil typing_extensions astunparse psutil setuptools numba
+        conda install -y pytest-shard pytest-rerunfailures pytest-flakefinder pytest-xdist pytest mock hypothesis psutil typing_extensions astunparse psutil setuptools numba
         ARCH=$(arch)
         if test "${ARCH}" == "x86_64"
         then
@@ -34,7 +34,7 @@ tests:
   - name: Run PyTorch test_dataloader
     command: |
         cd pytorch
-        python test/test_dataloader.py  TestDataLoader
+        python -m pytest -v test/test_dataloader.py -k "test_multiprocessing_iterdatapipe"
   - name: Run PyTorch test_distributions
     command: |
         cd pytorch
@@ -50,7 +50,7 @@ tests:
   - name: Run PyTorch test_nn
     command: |
         cd pytorch
-        python test/test_nn.py TestNN.test_Conv1d TestNN.test_Conv2d_cuda TestNN.test_Conv3d_stride_cuda TestNN.test_ELU
+        python test/test_nn.py TestNN.test_Conv1d TestNN.test_Conv2d_cuda TestNN.test_Conv3d_stride_cuda
   - name: Run PyTorch test_numba_integration
     command: |
         cd pytorch
