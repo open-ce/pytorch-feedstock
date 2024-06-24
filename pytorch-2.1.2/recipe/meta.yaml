@@ -33,7 +33,7 @@ requirements:
   host:
     - make
     - cmake {{ cmake }}
-    - cudatoolkit {{ cudatoolkit }}
+    - cudatoolkit {{ cudatoolkit }}    #[build_type == 'cuda']
     - python {{ python }}
     - numpy {{ numpy }}
     - setuptools {{ setuptools }}
