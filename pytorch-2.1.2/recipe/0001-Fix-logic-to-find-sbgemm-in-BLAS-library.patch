@@ -1,0 +1,47 @@
+From c3246c9d7b3d9173d8419decd8a07ac25322b412 Mon Sep 17 00:00:00 2001
+From: Aman Surkar <Aman.Surkar@ibm.com>
+Date: Mon, 24 Jun 2024 10:58:18 +0000
+Subject: [PATCH] Fix logic to find sbgemm in BLAS library
+
+---
+ cmake/Modules/FindBLAS.cmake | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/cmake/Modules/FindBLAS.cmake b/cmake/Modules/FindBLAS.cmake
+index 4d5007c625..5ca6c94988 100644
+--- a/cmake/Modules/FindBLAS.cmake
++++ b/cmake/Modules/FindBLAS.cmake
+@@ -385,16 +385,6 @@ IF (BLAS_LIBRARIES)
+   cmake_pop_check_state()
+ ENDIF(BLAS_LIBRARIES)
+ 
+-# Blas has bfloat16 support?
+-IF(BLAS_LIBRARIES)
+-  SET(CMAKE_REQUIRED_LIBRARIES ${BLAS_LIBRARIES})
+-  check_function_exists("sbgemm_" BLAS_HAS_SBGEMM)
+-  set(CMAKE_REQUIRED_LIBRARIES)
+-  IF(BLAS_HAS_SBGEMM)
+-    add_compile_options(-DBLAS_HAS_SBGEMM)
+-  ENDIF(BLAS_HAS_SBGEMM)
+-ENDIF(BLAS_LIBRARIES)
+-
+ # epilogue
+ 
+ if(BLAS_LIBRARIES)
+@@ -416,3 +406,13 @@ ENDIF(NOT BLAS_FIND_QUIETLY)
+ 
+ # Do nothing is BLAS was found before
+ ENDIF(NOT BLAS_FOUND)
++
++# Blas has bfloat16 support?
++IF(BLAS_LIBRARIES)
++  SET(CMAKE_REQUIRED_LIBRARIES ${BLAS_LIBRARIES})
++  check_function_exists("sbgemm_" BLAS_HAS_SBGEMM)
++  set(CMAKE_REQUIRED_LIBRARIES)
++  IF(BLAS_HAS_SBGEMM)
++    add_compile_options(-DBLAS_HAS_SBGEMM)
++  ENDIF(BLAS_HAS_SBGEMM)
++ENDIF(BLAS_LIBRARIES)
+-- 
+2.40.1
+

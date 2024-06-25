@@ -20,6 +20,7 @@ source:
     - 0310-PR100149.patch                #[ppc_arch == "p10"]
     - 0311-PR104956.patch                # [ppc64le]
     - 0312-Disabled-Wno-error-flag-for-p10.patch #[ppc_arch == "p10"]
+    - 0001-Fix-logic-to-find-sbgemm-in-BLAS-library.patch  #[ppc_arch == "p10"]
 
 requirements:
   build:
