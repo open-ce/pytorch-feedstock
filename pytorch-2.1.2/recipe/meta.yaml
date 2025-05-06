@@ -13,7 +13,6 @@ source:
     - 0106-disable-SHM-and-CMA-for-tensorpipe.patch
 #    - 0107-fix-clock-gettime-undefind-error-for-sleef.patch
     - 0108-skip-half-test.patch          # [ppc64le]
-
     # 03xx - patch temporary to fix a problem that when fixed upstream can be removed
     - 0309-fallback-to-cpu_kernel-with-VSX.patch     # [ppc64le]
 #    - 0302-cpp-extension.patch
@@ -22,6 +21,7 @@ source:
     - 0312-Disabled-Wno-error-flag-for-p10.patch #[ppc_arch == "p10"]
     - 0001-Fix-logic-to-find-sbgemm-in-BLAS-library.patch  #[ppc_arch == "p10"]
     - 0313-Fix-for-CVE-2024-31583-and-CVE-2024-31580.patch
+    - 0314-fixed-CVE-2025-32434.patch
 
 requirements:
   build:
