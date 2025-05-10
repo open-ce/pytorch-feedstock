@@ -28,7 +28,8 @@ requirements:
     - {{ compiler('c') }}                #[ppc_arch != "p10"]
     - {{ compiler('cxx') }}              #[ppc_arch != "p10"]
     - {{ compiler('fortran') }}          #[ppc_arch != "p10"]
-    - git >={{ git }}
+    - git >={{ git }}                          # [not x86_64]
+    - git {{ git }} pl5340h4fa2fa2_1           # [x86_64]
     - patch
     - zlib {{ zlib }}
 
