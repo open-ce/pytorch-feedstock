@@ -22,6 +22,8 @@ source:
     - 0312-Disabled-Wno-error-flag-for-p10.patch #[ppc_arch == "p10"]
     - 0001-Fix-logic-to-find-sbgemm-in-BLAS-library.patch  #[ppc_arch == "p10"]
     - 0313-Fix-for-CVE-2024-31583-and-CVE-2024-31580.patch
+    - 0314-fix-CVE-2025-2953.patch
+    - 0315-fix-CVE-2025-3730.patch
 
 requirements:
   build:
